@@ -9,12 +9,14 @@ public class SlimeController : MonoBehaviour
     public float turnSpeed;
 
     public GameObject slimeChunk;
+    public Vector2 launchForce;
 
     private int slime = 1;
 
     private Vector3 targetSize = Vector3.one;
 
     private PhotonView View;
+
 
     private void Start()
     {
@@ -81,12 +83,21 @@ public class SlimeController : MonoBehaviour
         {
             slime--;
             targetSize = slime * Vector3.one;
-            Instantiate(slimeChunk, new Vector3(transform.position.x, 1, transform.position.z) + (transform.forward * 5), Quaternion.identity);
+            LaunchSlime();
         }
         else
         {
             //TODO: deathFlag
         }
+    }
+
+    private void LaunchSlime()
+    {
+        Transform slimePiece = Instantiate(slimeChunk, transform.position + (transform.up * transform.localScale.y), Quaternion.Euler(0, Random.Range(0, 360), 0)).transform;
+
+        Rigidbody slimeRb = slimePiece.GetComponent<Rigidbody>();
+        slimeRb.AddForce(((slimePiece.forward * launchForce.x) + (slimePiece.up * launchForce.y)), ForceMode.Impulse);
+        slimeRb.AddTorque(launchForce, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
