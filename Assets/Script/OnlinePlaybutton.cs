@@ -12,6 +12,8 @@ public class OnlinePlaybutton : MonoBehaviourPunCallbacks
     [SerializeField] Button playbutton;
     [SerializeField] Text debugText;
 
+    [SerializeField] InputField roomName;
+
     //called from play button
     public void Connecttogame()
     {
