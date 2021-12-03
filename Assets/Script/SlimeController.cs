@@ -12,9 +12,20 @@ public class SlimeController : MonoBehaviour
 
     private int slime = 1;
 
+    private Vector3 targetSize = Vector3.one;
+
+    private PhotonView View;
+
     private void Start()
     {
+        View = GetComponent<PhotonView>();
+
         Cursor.lockState = CursorLockMode.Locked;
+
+        if (View.IsMine)
+        {
+            Camera.main.transform.parent = transform;
+        }
     }
 
     // Update is called once per frame
@@ -28,6 +39,12 @@ public class SlimeController : MonoBehaviour
         {
             DecreaseSize();
         }
+
+
+        if (transform.localScale != targetSize)
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, targetSize, Time.deltaTime);
+        }
     }
 
     public void Movement()
@@ -36,7 +53,7 @@ public class SlimeController : MonoBehaviour
 
         if (moveVector != Vector3.zero)
         {
-            transform.Translate(moveVector * MovementSpeed * Time.deltaTime);
+            transform.Translate(moveVector * MovementSpeed / (float)slime * Time.deltaTime);
         }
     }
 
@@ -55,7 +72,7 @@ public class SlimeController : MonoBehaviour
     private void IncreaseSize()
     {
         slime++;
-        transform.localScale = slime * Vector3.one;
+        targetSize = slime * Vector3.one;
     }
 
     private void DecreaseSize()
@@ -63,8 +80,8 @@ public class SlimeController : MonoBehaviour
         if (slime - 1 > 0)
         {
             slime--;
-            transform.localScale = slime * Vector3.one;
-            Instantiate(slimeChunk, transform.position + (transform.forward * 10), Quaternion.identity);
+            targetSize = slime * Vector3.one;
+            Instantiate(slimeChunk, new Vector3(transform.position.x, 1, transform.position.z) + (transform.forward * 5), Quaternion.identity);
         }
         else
         {
