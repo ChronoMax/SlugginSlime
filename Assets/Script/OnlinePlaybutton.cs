@@ -35,6 +35,14 @@ public class OnlinePlaybutton : MonoBehaviourPunCallbacks
 
     void SearchGame()
     {
+        if(roomName.text != "")
+        {
+            PhotonNetwork.JoinOrCreateRoom(roomName.text, new RoomOptions(), TypedLobby.Default);
+        }
+        else
+        {
+            PhotonNetwork.JoinRandomRoom();
+        }
         debugText.text = "Searching for a game..";
         StartCoroutine(SearchCreateGame());
     }
