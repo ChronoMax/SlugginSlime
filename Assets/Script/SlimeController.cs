@@ -108,7 +108,7 @@ public class SlimeController : MonoBehaviour
     {
         TargetDummyBehaviour dummy;
 
-        Collider[] hitCol = Physics.OverlapBox(transform.position + transform.forward, targetSize, Quaternion.identity);
+        Collider[] hitCol = Physics.OverlapBox(transform.position + (transform.forward * targetSize.z), targetSize / 2, Quaternion.identity);
         foreach (Collider col in hitCol)
         {
             if (col.gameObject != gameObject)
@@ -128,5 +128,11 @@ public class SlimeController : MonoBehaviour
             IncreaseSize();
             Destroy(collision.gameObject);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position + (transform.forward * targetSize.z), targetSize);
     }
 }
