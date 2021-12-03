@@ -42,6 +42,10 @@ public class SlimeController : MonoBehaviour
             DecreaseSize();
         }
 
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Attack();
+        }
 
         if (transform.localScale != targetSize)
         {
@@ -98,6 +102,23 @@ public class SlimeController : MonoBehaviour
         Rigidbody slimeRb = slimePiece.GetComponent<Rigidbody>();
         slimeRb.AddForce(((slimePiece.forward * launchForce.x) + (slimePiece.up * launchForce.y)), ForceMode.Impulse);
         slimeRb.AddTorque(launchForce, ForceMode.Impulse);
+    }
+
+    private void Attack()
+    {
+        TargetDummyBehaviour dummy;
+
+        Collider[] hitCol = Physics.OverlapBox(transform.position + transform.forward, targetSize, Quaternion.identity);
+        foreach (Collider col in hitCol)
+        {
+            if (col.gameObject != gameObject)
+            {
+                if(col.TryGetComponent(out dummy))
+                {
+                    dummy.DecreaseSize();
+                }
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
