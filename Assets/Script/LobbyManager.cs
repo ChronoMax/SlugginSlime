@@ -8,15 +8,20 @@ public class LobbyManager : MonoBehaviour
 {
 
     [SerializeField] Text RoomName;
+    [SerializeField] GameObject objectToSpawn;
     // Start is called before the first frame update
     void Start()
     {
         RoomName.text = PhotonNetwork.CurrentRoom.Name;
+
+        PhotonNetwork.Instantiate(objectToSpawn.name, Vector3.zero, Quaternion.identity);
     }
 
-    // Update is called once per frame
-    void Update()
+    void update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PhotonNetwork.LeaveRoom();
+        }
     }
 }

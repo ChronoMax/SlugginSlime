@@ -38,12 +38,14 @@ public class OnlinePlaybutton : MonoBehaviourPunCallbacks
         if(roomName.text != "")
         {
             PhotonNetwork.JoinOrCreateRoom(roomName.text, new RoomOptions(), TypedLobby.Default);
+            debugText.text = $"Joining {roomName.text} game..";
         }
         else
         {
             PhotonNetwork.JoinRandomRoom();
+            debugText.text = "Searching for a random game..";
         }
-        debugText.text = "Searching for a game..";
+        
         StartCoroutine(SearchCreateGame());
     }
 

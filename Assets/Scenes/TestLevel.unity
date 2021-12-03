@@ -546,7 +546,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &572613396
 MonoBehaviour:
@@ -561,6 +561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RoomName: {fileID: 1775139413}
+  objectToSpawn: {fileID: 6098307381703658406, guid: c9e817a32375a8349aaf7bc9fb52e10f, type: 3}
 --- !u!1 &700507813
 GameObject:
   m_ObjectHideFlags: 0
