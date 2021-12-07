@@ -118,7 +118,7 @@ public class SlimeController : MonoBehaviour
 
     private void IncreaseSize()
     {
-        slime++;
+        slime++; 
         targetSize = slime * Vector3.one;
     }
 
@@ -132,7 +132,10 @@ public class SlimeController : MonoBehaviour
         }
         else
         {
-            //TODO: deathFlag
+            MovementSpeed = 0;
+            turnSpeed = 0;
+            targetSize = Vector3.zero * 0.1f;
+            Destroy(gameObject, 10);
         }
     }
 
