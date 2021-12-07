@@ -113,7 +113,7 @@ public class SlimeController : MonoBehaviour
         }
 
         StopAllCoroutines();
-        StartCoroutine(ChangeCameraType());
+        StartCoroutine(MoveAndRotateCamera());
     }
 
     private void IncreaseSize()
@@ -184,7 +184,7 @@ public class SlimeController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position + (transform.forward * targetSize.z), targetSize.z / 2 * HitBoxScaling);
     }
 
-    private IEnumerator ChangeCameraType()
+    private IEnumerator MoveAndRotateCamera()
     {
         while (Vector3.Distance(cam.position, targetCamPosition) >= 0.5f && cam.eulerAngles != targetCamRotation)
         {
