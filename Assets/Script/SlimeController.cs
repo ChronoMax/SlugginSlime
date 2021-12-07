@@ -19,6 +19,13 @@ public class SlimeController : MonoBehaviour
 
     private Vector3 targetSize = Vector3.one;
 
+    Transform cam;
+    private Vector3 targetCamPosition;
+    private Vector3 targetCamRotation;
+
+    private Vector3 oldCamPosition;
+    private Vector3 oldCamRotation;
+
     private PhotonView View;
 
 
@@ -33,17 +40,17 @@ public class SlimeController : MonoBehaviour
 
         if (View.IsMine)
         {
-            Camera.main.transform.parent = transform;
+            cam = Camera.main.transform;
+            cam.parent = transform;
+            oldCamPosition = cam.localPosition;
+            oldCamRotation = cam.localEulerAngles;
         }
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        Transform cam = Camera.main.transform;
-        Vector3 offset = (cameraOffset.y * transform.up) + (cameraOffset.z * transform.forward);
-        Vector3 rotationOffset = new Vector3(0, transform.eulerAngles.y, 0);
-
         Movement();
 
         CameraMovment();
@@ -56,6 +63,11 @@ public class SlimeController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Attack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ChangeCameraModes();
         }
 
         if (transform.localScale != targetSize)
@@ -84,6 +96,24 @@ public class SlimeController : MonoBehaviour
 
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, mouseInputY, transform.eulerAngles.z);
         }
+    }
+
+    public void ChangeCameraModes()
+    {
+        useFirstPersonCam = !useFirstPersonCam;
+        if (useFirstPersonCam)
+        {
+            targetCamPosition = Vector3.zero;
+            targetCamRotation = Vector3.zero;
+        }
+        else
+        {
+            targetCamPosition = oldCamPosition;
+            targetCamRotation = oldCamRotation;
+        }
+
+        StopAllCoroutines();
+        StartCoroutine(ChangeCameraType());
     }
 
     private void IncreaseSize()
@@ -125,7 +155,7 @@ public class SlimeController : MonoBehaviour
         {
             //if (col.TryGetComponent(out photonviewer) && !photonviewer.IsMine)
             //{
-            if(col.gameObject != gameObject)
+            if (col.gameObject != gameObject)
             {
                 if (col.TryGetComponent(out dummy))
                 {
@@ -152,5 +182,15 @@ public class SlimeController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + (transform.forward * targetSize.z), targetSize.z / 2 * HitBoxScaling);
+    }
+
+    private IEnumerator ChangeCameraType()
+    {
+        while (Vector3.Distance(cam.position, targetCamPosition) >= 0.5f && cam.eulerAngles != targetCamRotation)
+        {
+            cam.localPosition = Vector3.Lerp(cam.localPosition, targetCamPosition, Time.deltaTime * 10);
+            cam.localEulerAngles = Vector3.Lerp(cam.localEulerAngles, targetCamRotation, Time.deltaTime * 10);
+            yield return new WaitForSeconds(0.000001f);
+        }
     }
 }
