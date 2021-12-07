@@ -17,7 +17,7 @@ public class LobbyManager : MonoBehaviour
         PhotonNetwork.Instantiate(objectToSpawn.name, Vector3.zero, Quaternion.identity);
     }
 
-    void update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {

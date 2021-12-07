@@ -9,17 +9,48 @@ public class OnlinePlaybutton : MonoBehaviourPunCallbacks
 {
     [SerializeField] string onlineScene;
 
-    [SerializeField] Button playbutton;
+    [SerializeField] Button createButton;
+
+    [SerializeField] Button joinButton;
     [SerializeField] Text debugText;
 
     [SerializeField] InputField roomName;
 
-    //called from play button
-    public void Connecttogame()
+    void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
         debugText.text = "Connecting to servers...";
-        playbutton.interactable = false;
+    }
+    //called from play button
+    public void Connecttogame()
+    {
+
+        createButton.interactable = false;
+    }
+
+    public void ConnectoCreatedgame()
+    {
+        StartCoroutine(CreateGame());
+    }
+
+    void Update()
+    {
+        if(roomName.text.Length == 5)
+        {
+            joinButton.interactable = true;
+        }
+        else
+        {
+            joinButton.interactable = false;
+        }
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        foreach (RoomInfo info in roomList)
+        {
+            Debug.Log(info);
+        }
     }
 
     //Called when connected to the masterclient
@@ -30,22 +61,18 @@ public class OnlinePlaybutton : MonoBehaviourPunCallbacks
             $"{PhotonNetwork.CloudRegion} with ping " +
             $"{PhotonNetwork.GetPing().ToString()}";
 
-        SearchGame();
+        //SearchGame();
     }
 
     void SearchGame()
     {
         if(roomName.text != "")
         {
-            PhotonNetwork.JoinOrCreateRoom(roomName.text, new RoomOptions(), TypedLobby.Default);
+            PhotonNetwork.JoinRoom(roomName.text);
             debugText.text = $"Joining {roomName.text} game..";
         }
-        else
-        {
-            PhotonNetwork.JoinRandomRoom();
-            debugText.text = "Searching for a random game..";
-        }
         
+        debugText.text = "Searching for a random game..";
         StartCoroutine(SearchCreateGame());
     }
 
