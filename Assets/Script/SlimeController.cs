@@ -11,11 +11,18 @@ public class SlimeController : MonoBehaviour
     public GameObject slimeChunk;
     public Vector2 launchForce;
 
+    public Vector3 cameraOffset;
+
+    public float HitBoxScaling = 1;
+
     private int slime = 1;
 
     private Vector3 targetSize = Vector3.one;
 
     private PhotonView View;
+
+
+    private bool useFirstPersonCam = false;
 
 
     private void Start()
@@ -33,6 +40,10 @@ public class SlimeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Transform cam = Camera.main.transform;
+        Vector3 offset = (cameraOffset.y * transform.up) + (cameraOffset.z * transform.forward);
+        Vector3 rotationOffset = new Vector3(0, transform.eulerAngles.y, 0);
+
         Movement();
 
         CameraMovment();
@@ -107,15 +118,22 @@ public class SlimeController : MonoBehaviour
     private void Attack()
     {
         TargetDummyBehaviour dummy;
+        SlimeController slimeScript;
 
-        Collider[] hitCol = Physics.OverlapBox(transform.position + (transform.forward * targetSize.z), targetSize / 2, Quaternion.identity);
+        Collider[] hitCol = Physics.OverlapSphere(transform.position + (transform.forward * targetSize.z), targetSize.z / 2);
         foreach (Collider col in hitCol)
         {
-            if (col.gameObject != gameObject)
+            //if (col.TryGetComponent(out photonviewer) && !photonviewer.IsMine)
+            //{
+            if(col.gameObject != gameObject)
             {
-                if(col.TryGetComponent(out dummy))
+                if (col.TryGetComponent(out dummy))
                 {
                     dummy.DecreaseSize();
+                }
+                else if (col.TryGetComponent(out slimeScript))
+                {
+                    slimeScript.DecreaseSize();
                 }
             }
         }
@@ -133,6 +151,6 @@ public class SlimeController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position + (transform.forward * targetSize.z), targetSize);
+        Gizmos.DrawWireSphere(transform.position + (transform.forward * targetSize.z), targetSize.z / 2 * HitBoxScaling);
     }
 }
