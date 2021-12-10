@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Bullet
   - slimeChunk
+  - red
+  - blue
+  - green
   layers:
   - Default
   - TransparentFX

@@ -45,6 +45,15 @@ public class SlimeController : MonoBehaviour
             oldCamPosition = cam.localPosition;
             oldCamRotation = cam.localEulerAngles;
         }
+
+        //View.RPC("TeamSetup", RpcTarget.AllBuffered, Color.red.ToString());
+    }
+
+    [PunRPC]
+    public void TeamSetup(Color color)
+    {
+        tag = color.ToString();
+        GetComponent<Renderer>().material.color = color;
     }
 
 
@@ -118,7 +127,7 @@ public class SlimeController : MonoBehaviour
 
     private void IncreaseSize()
     {
-        slime++; 
+        slime++;
         targetSize = slime * Vector3.one;
     }
 
