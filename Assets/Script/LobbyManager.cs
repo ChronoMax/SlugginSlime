@@ -15,14 +15,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         RoomName.text = PhotonNetwork.CurrentRoom.Name;
 
-        PhotonNetwork.Instantiate(objectToSpawn.name, Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate(objectToSpawn.name, new Vector3(0, 0.5f, -10), Quaternion.identity);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PhotonNetwork.LeaveRoom();
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    PhotonNetwork.LeaveRoom();
+        //}
     }
 }
