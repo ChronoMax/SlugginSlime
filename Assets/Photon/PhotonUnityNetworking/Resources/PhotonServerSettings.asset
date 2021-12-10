@@ -42,6 +42,9 @@ MonoBehaviour:
   - TeamSetup
   - DecreaseSize
   - IncreaseSize
+  - Death
+  - CollectSlime
+  - DestroySlime
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

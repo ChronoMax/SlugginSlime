@@ -200,14 +200,8 @@ public class SlimeController : MonoBehaviour
         if (collision.collider.CompareTag("slimeChunk"))
         {
             View.RPC("IncreaseSize", RpcTarget.AllBuffered);
-            View.RPC("CollectSlime", RpcTarget.AllBuffered, collision.gameObject);
+            collision.gameObject.GetComponent<SlimeChunkBehaviour>().CollectSlime();
         }
-    }
-
-    [PunRPC]
-    private void CollectSlime(GameObject slimeChunk)
-    {
-        Destroy(slimeChunk);
     }
 
     private void OnDrawGizmos()
