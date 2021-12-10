@@ -45,14 +45,6 @@ public class OnlinePlaybutton : MonoBehaviourPunCallbacks
         }
     }
 
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    {
-        foreach (RoomInfo info in roomList)
-        {
-            Debug.Log(info);
-        }
-    }
-
     //Called when connected to the masterclient
     public override void OnConnectedToMaster()
     {

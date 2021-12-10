@@ -16,32 +16,66 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     [SerializeField] Button playButton;
     [SerializeField] Button createButton;
     [SerializeField] Button joinButton;
+    [SerializeField] Text textButton;
 
+    private List<RoomInfo> roomList;
+
+    private bool foundRoom = false;
     void Start()
     {
         debugText.text = "Connecting to servers...";
         PhotonNetwork.ConnectUsingSettings();
 
         playButton.interactable = false;
-        createButton.interactable = false;
+        joinButton.interactable = false;
+    }
+
+    public void Play()
+    {
+        if(PhotonNetwork.IsConnected)
+        {
+            StartCoroutine(JoinRandomRoom());   
+        }
     }
 
     public void SearchGame()
     {
-        StartCoroutine(CreateRandomRoom());
+        if(PhotonNetwork.IsConnected)
+        {
+            StartCoroutine(CreateRandomRoom());
+        }
     }
 
-    IEnumerator JoinRoom()
+    public void UpdateRoomList()
+    {
+        if(roomName.text.Length == 5)
+        {
+            foundRoom = CheckRoom();
+            if(CheckRoom())
+            {
+                textButton.text = "Join";
+            }
+            else
+            {
+                textButton.text = "Room not found";
+            }
+        }else
+        {
+            textButton.text = "Create";
+        }
+
+        PhotonNetwork.JoinLobby();
+    }
+    IEnumerator JoinRandomRoom()
     {
         yield return new WaitForSeconds(1);
 
         PhotonNetwork.JoinRandomRoom();
     }
 
-    IEnumerator CreateRandomRoom()//play / create button
+    IEnumerator CreateRandomRoom()
     {
-        yield return new WaitForSecondsRealtime(1);
-
+        yield return new WaitForSecondsRealtime(3);
         string randomRoom = Random.Range(1, 100000).ToString();
 
         RoomOptions roomOpsSpecial = new RoomOptions()
@@ -51,7 +85,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
             MaxPlayers = (byte)4, // RoomSize in Bytes
         };
 
-        if(roomName.text != "")
+        if(roomName.text.Length == 5 && foundRoom == true)
         {
             debugText.text = $"Joining {roomName.text} game..";
             PhotonNetwork.JoinRoom(roomName.text);
@@ -61,6 +95,21 @@ public class MatchMaking : MonoBehaviourPunCallbacks
             debugText.text = "Searching for a random game..";
             PhotonNetwork.CreateRoom(randomRoom, roomOpsSpecial);
         }
+    }
+
+    private bool CheckRoom()
+    {
+        if(roomList != null)
+        {
+            foreach(RoomInfo room in roomList)
+            {
+                if(room.Name == roomName.text)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     //Called when successfully joined a room
@@ -78,7 +127,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
             $"{PhotonNetwork.CloudRegion} with ping " +
             $"{PhotonNetwork.GetPing()}";
         playButton.interactable = true;
-        createButton.interactable = true;
+        joinButton.interactable = true;
     }
 
     //Called when the player has succesfully created a room
@@ -92,5 +141,11 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     {
         debugText.text = $"{message}, creating game...";
         StartCoroutine(CreateRandomRoom());
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> p_list)
+    {
+        roomList = p_list;
+        base.OnRoomListUpdate(roomList);
     }
 }
