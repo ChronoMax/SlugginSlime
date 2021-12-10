@@ -202,7 +202,7 @@ public class SlimeController : MonoBehaviour
         {
             View.RPC("IncreaseSize", RpcTarget.AllBuffered);
             //collision.gameObject.GetComponent<SlimeChunkBehaviour>().CollectSlime();
-            PhotonNetwork.Destroy(gameObject);
+            PhotonNetwork.Destroy(collision.gameObject);
         }
     }
 
