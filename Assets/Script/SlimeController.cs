@@ -68,7 +68,7 @@ public class SlimeController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                DecreaseSize();
+                View.RPC("DecreaseSize", RpcTarget.AllBuffered);
             }
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -138,7 +138,7 @@ public class SlimeController : MonoBehaviour
     [PunRPC]
     private void DecreaseSize()
     {
-        if (slime - 1 >= 0)
+        if (slime - 1 > 0)
         {
             slime--;
             targetSize = slime * Vector3.one;
@@ -197,8 +197,11 @@ public class SlimeController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + (transform.forward * targetSize.z), targetSize.z / 2 * HitBoxScaling);
+        if (View.IsMine)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position + (transform.forward * targetSize.z), targetSize.z / 2 * HitBoxScaling);
+        }
     }
 
     private IEnumerator MoveAndRotateCamera()
