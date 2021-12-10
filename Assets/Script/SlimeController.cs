@@ -52,7 +52,7 @@ public class SlimeController : MonoBehaviour
     [PunRPC]
     public void TeamSetup(Vector3 color)
     {
-        tag = color.ToString();
+        //tag = color.ToString();
         GetComponent<Renderer>().material.color = new Color(color.x, color.y, color.z);
     }
 
