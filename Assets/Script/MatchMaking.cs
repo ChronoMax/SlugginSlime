@@ -25,6 +25,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     {
         debugText.text = "Connecting to servers...";
         PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.ConnectToRegion("eu");
 
         playButton.interactable = false;
         joinButton.interactable = false;
