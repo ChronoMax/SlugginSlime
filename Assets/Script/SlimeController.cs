@@ -46,14 +46,14 @@ public class SlimeController : MonoBehaviour
             oldCamRotation = cam.localEulerAngles;
         }
 
-        //View.RPC("TeamSetup", RpcTarget.AllBuffered, Color.red.ToString());
+        View.RPC("TeamSetup", RpcTarget.AllBuffered, new Vector3(Color.red.r, Color.red.b, Color.red.g));
     }
 
     [PunRPC]
-    public void TeamSetup(Color color)
+    public void TeamSetup(Vector3 color)
     {
         tag = color.ToString();
-        GetComponent<Renderer>().material.color = color;
+        GetComponent<Renderer>().material.color = new Color(color.x, color.y, color.z);
     }
 
 
@@ -68,7 +68,7 @@ public class SlimeController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                View.RPC("DecreaseSize", RpcTarget.AllBuffered);
+                View.RPC("DecreaseSize", RpcTarget.AllBuffered, false);
             }
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -136,7 +136,7 @@ public class SlimeController : MonoBehaviour
     }
 
     [PunRPC]
-    private void DecreaseSize()
+    private void DecreaseSize(bool EnemyAttack)
     {
         if (slime - 1 > 0)
         {
@@ -144,12 +144,9 @@ public class SlimeController : MonoBehaviour
             targetSize = slime * Vector3.one;
             LaunchSlime();
         }
-        else
+        else if (EnemyAttack)
         {
-            MovementSpeed = 0;
-            turnSpeed = 0;
-            targetSize = Vector3.zero * 0.1f;
-            Destroy(gameObject, 10);
+            View.RPC("Death", RpcTarget.AllBuffered);
         }
     }
 
@@ -160,6 +157,15 @@ public class SlimeController : MonoBehaviour
         Rigidbody slimeRb = slimePiece.GetComponent<Rigidbody>();
         slimeRb.AddForce(((slimePiece.forward * launchForce.x) + (slimePiece.up * launchForce.y)), ForceMode.Impulse);
         slimeRb.AddTorque(launchForce, ForceMode.Impulse);
+    }
+
+    [PunRPC]
+    private void Death()
+    {
+        MovementSpeed = 0;
+        turnSpeed = 0;
+        targetSize = Vector3.zero * 0.1f;
+        Destroy(gameObject, 10);
     }
 
     private void Attack()
@@ -180,7 +186,7 @@ public class SlimeController : MonoBehaviour
                 }
                 else if (col.TryGetComponent(out slimeScript))
                 {
-                    slimeScript.GetPhotonView().RPC("DecreaseSize", RpcTarget.AllBuffered);
+                    slimeScript.GetPhotonView().RPC("DecreaseSize", RpcTarget.AllBuffered, true);
                 }
             }
         }
