@@ -60,28 +60,31 @@ public class SlimeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
-
-        CameraMovment();
-
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (View.IsMine)
         {
-            DecreaseSize();
-        }
+            Movement();
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Attack();
-        }
+            CameraMovment();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ChangeCameraModes();
-        }
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                DecreaseSize();
+            }
 
-        if (transform.localScale != targetSize)
-        {
-            transform.localScale = Vector3.Lerp(transform.localScale, targetSize, Time.deltaTime);
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Attack();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ChangeCameraModes();
+            }
+
+            if (transform.localScale != targetSize)
+            {
+                transform.localScale = Vector3.Lerp(transform.localScale, targetSize, Time.deltaTime);
+            }
         }
     }
 
@@ -135,7 +138,7 @@ public class SlimeController : MonoBehaviour
     [PunRPC]
     private void DecreaseSize()
     {
-        if (slime - 1 > 0)
+        if (slime - 1 >= 0)
         {
             slime--;
             targetSize = slime * Vector3.one;
