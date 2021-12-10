@@ -145,7 +145,7 @@ public class SlimeController : MonoBehaviour
         {
             slime--;
             targetSize = slime * Vector3.one;
-            View.RPC("LaunchSlime", RpcTarget.All, (float)Random.Range(0, 360));
+            View.RPC("LaunchSlime", RpcTarget.All, Random.Range(0, 360f));
         }
         else if (EnemyAttack)
         {
