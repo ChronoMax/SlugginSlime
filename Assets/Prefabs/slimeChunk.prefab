@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 783435941906504440}
   - component: {fileID: 1615111509577082252}
   - component: {fileID: 5655836811274342684}
+  - component: {fileID: 6798154748649924315}
   m_Layer: 0
   m_Name: slimeChunk
   m_TagString: slimeChunk
@@ -153,3 +154,15 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6798154748649924315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651031165683186534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239129470d0a7e74ea18e29e7f54c52e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
