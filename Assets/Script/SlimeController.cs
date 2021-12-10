@@ -131,8 +131,11 @@ public class SlimeController : MonoBehaviour
     [PunRPC]
     private void IncreaseSize()
     {
-        slime++;
-        targetSize = slime * Vector3.one;
+        if (View.IsMine)
+        {
+            slime++;
+            targetSize = slime * Vector3.one;
+        }
     }
 
     [PunRPC]
