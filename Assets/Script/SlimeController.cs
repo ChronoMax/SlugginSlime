@@ -201,7 +201,8 @@ public class SlimeController : MonoBehaviour
         if (collision.collider.CompareTag("slimeChunk"))
         {
             View.RPC("IncreaseSize", RpcTarget.AllBuffered);
-            collision.gameObject.GetComponent<SlimeChunkBehaviour>().CollectSlime();
+            //collision.gameObject.GetComponent<SlimeChunkBehaviour>().CollectSlime();
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 

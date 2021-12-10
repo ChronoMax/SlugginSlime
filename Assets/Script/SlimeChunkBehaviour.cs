@@ -15,12 +15,12 @@ public class SlimeChunkBehaviour : MonoBehaviour
 
     public void CollectSlime()
     {
-        view.RPC("DestroySlime", RpcTarget.AllBuffered);
+        view.RPC("DestroySlime", RpcTarget.MasterClient);
     }
 
     [PunRPC]
     private void DestroySlime()
     {
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 }
