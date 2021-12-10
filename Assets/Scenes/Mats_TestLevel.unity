@@ -217,7 +217,6 @@ GameObject:
   - component: {fileID: 70338304}
   - component: {fileID: 70338303}
   - component: {fileID: 70338305}
-  - component: {fileID: 70338306}
   m_Layer: 0
   m_Name: slimeChunk (3)
   m_TagString: slimeChunk
@@ -356,18 +355,6 @@ MonoBehaviour:
   sceneViewId: 6
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &70338306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 70338298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 239129470d0a7e74ea18e29e7f54c52e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &220985880
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,7 +370,6 @@ GameObject:
   - component: {fileID: 220985886}
   - component: {fileID: 220985885}
   - component: {fileID: 220985887}
-  - component: {fileID: 220985888}
   m_Layer: 0
   m_Name: slimeChunk (5)
   m_TagString: slimeChunk
@@ -522,18 +508,6 @@ MonoBehaviour:
   sceneViewId: 5
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &220985888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220985880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 239129470d0a7e74ea18e29e7f54c52e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &303501709
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,7 +879,6 @@ GameObject:
   - component: {fileID: 972896140}
   - component: {fileID: 972896139}
   - component: {fileID: 972896141}
-  - component: {fileID: 972896142}
   m_Layer: 0
   m_Name: slimeChunk (4)
   m_TagString: slimeChunk
@@ -1043,18 +1016,6 @@ MonoBehaviour:
   sceneViewId: 4
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &972896142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 972896134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 239129470d0a7e74ea18e29e7f54c52e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1098274232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,7 +1131,6 @@ GameObject:
   - component: {fileID: 1678700153}
   - component: {fileID: 1678700152}
   - component: {fileID: 1678700154}
-  - component: {fileID: 1678700155}
   m_Layer: 0
   m_Name: slimeChunk (1)
   m_TagString: slimeChunk
@@ -1309,18 +1269,6 @@ MonoBehaviour:
   sceneViewId: 3
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1678700155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1678700147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 239129470d0a7e74ea18e29e7f54c52e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2028226829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,7 +1284,6 @@ GameObject:
   - component: {fileID: 2028226835}
   - component: {fileID: 2028226834}
   - component: {fileID: 2028226836}
-  - component: {fileID: 2028226837}
   m_Layer: 0
   m_Name: slimeChunk (2)
   m_TagString: slimeChunk
@@ -1474,18 +1421,6 @@ MonoBehaviour:
   sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2028226837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2028226829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 239129470d0a7e74ea18e29e7f54c52e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2051892614
 PrefabInstance:
   m_ObjectHideFlags: 0
