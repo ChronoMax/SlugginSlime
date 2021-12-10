@@ -125,12 +125,14 @@ public class SlimeController : MonoBehaviour
         StartCoroutine(MoveAndRotateCamera());
     }
 
+    [PunRPC]
     private void IncreaseSize()
     {
         slime++;
         targetSize = slime * Vector3.one;
     }
 
+    [PunRPC]
     private void DecreaseSize()
     {
         if (slime - 1 > 0)
@@ -175,7 +177,7 @@ public class SlimeController : MonoBehaviour
                 }
                 else if (col.TryGetComponent(out slimeScript))
                 {
-                    slimeScript.DecreaseSize();
+                    slimeScript.GetPhotonView().RPC("IncreaseSize", RpcTarget.AllBuffered);
                 }
             }
         }
@@ -185,7 +187,7 @@ public class SlimeController : MonoBehaviour
     {
         if (collision.collider.CompareTag("slimeChunk"))
         {
-            IncreaseSize();
+            View.RPC("IncreaseSize", RpcTarget.AllBuffered);
             Destroy(collision.gameObject);
         }
     }
@@ -204,5 +206,10 @@ public class SlimeController : MonoBehaviour
             cam.localEulerAngles = Vector3.Lerp(cam.localEulerAngles, targetCamRotation, Time.deltaTime * 10);
             yield return new WaitForSeconds(0.000001f);
         }
+    }
+
+    public PhotonView GetPhotonView()
+    {
+        return View;
     }
 }
