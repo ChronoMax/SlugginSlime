@@ -177,7 +177,7 @@ public class SlimeController : MonoBehaviour
                 }
                 else if (col.TryGetComponent(out slimeScript))
                 {
-                    slimeScript.GetPhotonView().RPC("IncreaseSize", RpcTarget.AllBuffered);
+                    slimeScript.GetPhotonView().RPC("DecreaseSize", RpcTarget.AllBuffered);
                 }
             }
         }
