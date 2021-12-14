@@ -85,6 +85,11 @@ public class SlimeController : MonoBehaviour
             {
                 transform.localScale = Vector3.Lerp(transform.localScale, targetSize, Time.deltaTime);
             }
+
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
         }
     }
 
@@ -153,7 +158,7 @@ public class SlimeController : MonoBehaviour
         }
     }
 
-
+    //[PunRPC]
     private void LaunchSlime(float angle)
     {
         Transform slimePiece = PhotonNetwork.Instantiate("slimeChunk", transform.position + (transform.up * transform.localScale.y), Quaternion.Euler(0, angle, 0)).transform;
@@ -202,21 +207,26 @@ public class SlimeController : MonoBehaviour
         {
             View.RPC("IncreaseSize", RpcTarget.AllBuffered);
 
-            if (!collision.gameObject.GetComponent<PhotonView>().IsMine)
-            {
-                collision.gameObject.GetComponent<PhotonView>().TransferOwnership(View.Owner);
-            }
+            //collision.gameObject.GetComponent<PhotonView>().TransferOwnership(View.Owner);
 
-            collision.gameObject.SetActive(false);
+            //collision.gameObject.SetActive(false);
 
-            StartCoroutine(DelayedNetworkDestroy(collision.gameObject));
+            //Debug.Log(collision.gameObject.GetComponent<PhotonView>().Owner);
+
+            //PhotonNetwork.Destroy(collision.gameObject);
+
+            View.RPC("DeleteSlimeChunk", RpcTarget.All, collision.gameObject.GetComponent<PhotonView>().ViewID);
         }
     }
 
-    private IEnumerator DelayedNetworkDestroy(GameObject gameObject)
+    [PunRPC]
+    private void DeleteSlimeChunk(int id)
     {
-        yield return new WaitForSeconds(1f);
-        PhotonNetwork.Destroy(gameObject);
+        PhotonView view = PhotonView.Find(id);
+        if (view.IsMine)
+        {
+            PhotonNetwork.Destroy(view.gameObject);
+        }
     }
 
     private void OnDrawGizmos()
