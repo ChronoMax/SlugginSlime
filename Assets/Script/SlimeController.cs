@@ -145,7 +145,7 @@ public class SlimeController : MonoBehaviour
         {
             slime--;
             targetSize = slime * Vector3.one;
-            View.RPC("LaunchSlime", RpcTarget.All, Random.Range(0, 360f));
+            LaunchSlime(Random.Range(0, 360f));
         }
         else if (EnemyAttack)
         {
@@ -153,10 +153,10 @@ public class SlimeController : MonoBehaviour
         }
     }
 
-    [PunRPC]
+
     private void LaunchSlime(float angle)
     {
-        Transform slimePiece = Instantiate(slimeChunk, transform.position + (transform.up * transform.localScale.y), Quaternion.Euler(0, angle, 0)).transform;
+        Transform slimePiece = PhotonNetwork.Instantiate("slimeChunk", transform.position + (transform.up * transform.localScale.y), Quaternion.Euler(0, angle, 0)).transform;
 
         Rigidbody slimeRb = slimePiece.GetComponent<Rigidbody>();
         slimeRb.AddForce(((slimePiece.forward * launchForce.x) + (slimePiece.up * launchForce.y)), ForceMode.Impulse);
@@ -201,7 +201,10 @@ public class SlimeController : MonoBehaviour
         if (collision.collider.CompareTag("slimeChunk"))
         {
             View.RPC("IncreaseSize", RpcTarget.AllBuffered);
-            Destroy(collision.gameObject);
+
+            collision.gameObject.GetComponent<PhotonView>().TransferOwnership(View.Owner);
+
+            PhotonNetwork.Destroy(collision.gameObject);
         }
     }
 

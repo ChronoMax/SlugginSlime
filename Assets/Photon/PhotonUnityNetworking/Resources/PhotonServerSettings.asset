@@ -46,6 +46,7 @@ MonoBehaviour:
   - CollectSlime
   - DestroySlime
   - LaunchSlime
+  - destroySlimeChunk
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
