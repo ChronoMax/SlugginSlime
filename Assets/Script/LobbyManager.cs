@@ -10,6 +10,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     [SerializeField] Text RoomName;
     [SerializeField] GameObject objectToSpawn;
+    [SerializeField] GameObject exitPanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +24,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PhotonNetwork.LeaveRoom();
+            exitPanel.SetActive(!exitPanel.activeSelf);
         }
+    }
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel("PhotonMainMenu");
+    }
+
+    public void ButtonExitRoom(){
+        PhotonNetwork.LeaveRoom();
     }
 }
