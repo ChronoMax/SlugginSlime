@@ -11,6 +11,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] Text RoomName;
     [SerializeField] GameObject objectToSpawn;
     [SerializeField] GameObject exitPanel;
+    [SerializeField] GameObject fpsCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             exitPanel.SetActive(!exitPanel.activeSelf);
         }
+
+        if(fpsCounter.activeSelf)
+        {
+            fpsCounter.GetComponent<Text>().text = "FPS: " + (1 / Time.deltaTime).ToString("0.00");
+            fpsCounter.GetComponent<Text>().text = (1f / Time.unscaledDeltaTime).ToString();
+        }
     }
 
     public override void OnLeftRoom()
@@ -33,7 +40,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("PhotonMainMenu");
     }
 
-    public void ButtonExitRoom(){
+    public void ButtonExitRoom()//Button to leave the room
+    {
         PhotonNetwork.LeaveRoom();
+    }
+
+    public void ButtonFPS()//Show fps counter
+    {
+        fpsCounter.SetActive(!fpsCounter.activeSelf);
     }
 }
