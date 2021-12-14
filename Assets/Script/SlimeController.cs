@@ -145,7 +145,7 @@ public class SlimeController : MonoBehaviour
         {
             slime--;
             targetSize = slime * Vector3.one;
-            LaunchSlime(Random.Range(0, 360f));
+            View.RPC("LaunchSlime", RpcTarget.All, Random.Range(0, 360f));
         }
         else if (EnemyAttack)
         {
@@ -153,9 +153,10 @@ public class SlimeController : MonoBehaviour
         }
     }
 
+    [PunRPC]
     private void LaunchSlime(float angle)
     {
-        Transform slimePiece = PhotonNetwork.InstantiateRoomObject("slimeChunk", transform.position + (transform.up * transform.localScale.y), Quaternion.Euler(0, angle, 0)).transform;
+        Transform slimePiece = Instantiate(slimeChunk, transform.position + (transform.up * transform.localScale.y), Quaternion.Euler(0, angle, 0)).transform;
 
         Rigidbody slimeRb = slimePiece.GetComponent<Rigidbody>();
         slimeRb.AddForce(((slimePiece.forward * launchForce.x) + (slimePiece.up * launchForce.y)), ForceMode.Impulse);
