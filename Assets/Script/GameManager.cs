@@ -57,8 +57,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
-    public void ButtonFPS()//Show fps counter
+    public void ButtonFPS(bool toggle)//Show fps counter
     {
-        fpsCounter.SetActive(!fpsCounter.activeSelf);
+        fpsCounter.SetActive(toggle);
     }
 }
