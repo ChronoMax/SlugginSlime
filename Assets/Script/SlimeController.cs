@@ -202,10 +202,21 @@ public class SlimeController : MonoBehaviour
         {
             View.RPC("IncreaseSize", RpcTarget.AllBuffered);
 
-            collision.gameObject.GetComponent<PhotonView>().TransferOwnership(View.Owner);
+            if (!collision.gameObject.GetComponent<PhotonView>().IsMine)
+            {
+                collision.gameObject.GetComponent<PhotonView>().TransferOwnership(View.Owner);
+            }
 
-            PhotonNetwork.Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
+
+            StartCoroutine(DelayedNetworkDestroy(collision.gameObject));
         }
+    }
+
+    private IEnumerator DelayedNetworkDestroy(GameObject gameObject)
+    {
+        yield return new WaitForSeconds(1f);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     private void OnDrawGizmos()
