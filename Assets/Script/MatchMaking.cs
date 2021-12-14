@@ -23,12 +23,14 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     private bool foundRoom = false;
     void Start()
     {
-        debugText.text = "Connecting to servers...";
-        PhotonNetwork.ConnectUsingSettings();
-        PhotonNetwork.ConnectToRegion("eu");
+        if(!PhotonNetwork.IsConnected){
+            debugText.text = "Connecting to servers...";
+            PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.ConnectToRegion("eu");
 
-        playButton.interactable = false;
-        joinButton.interactable = false;
+            playButton.interactable = false;
+            joinButton.interactable = false;
+        }
     }
 
     public void Play()
