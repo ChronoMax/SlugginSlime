@@ -42,16 +42,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         photonView.RPC("SetText", RpcTarget.All);
     }
 
-    public void OnReadyButtonClicked()
+    public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         photonView.RPC("ReadyPlayers", RpcTarget.All);
         photonView.RPC("SetText", RpcTarget.All);
     }
 
+    public void OnReadyButtonClicked()
+    {
+        photonView.RPC("ReadyPlayers", RpcTarget.AllBuffered);
+        photonView.RPC("SetText", RpcTarget.AllBuffered);
+    }
+
     [PunRPC]
     void SetText()
     {
-        joinedplayers = PhotonNetwork.CurrentRoom.PlayerCount;
         playerCountText.text = joinedplayers + "/4 players joined";
         playerReadyText.text = readyplayers + "/" + joinedplayers + " players are ready";
     }
@@ -59,7 +64,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [PunRPC]
     int ReadyPlayers()
     {
+        joinedplayers = PhotonNetwork.CurrentRoom.PlayerCount;
         readyplayers++;
+
+        if (readyplayers >= joinedplayers)
+        {
+            readyplayers = joinedplayers;
+        }
+
         return readyplayers;
     }
 }
