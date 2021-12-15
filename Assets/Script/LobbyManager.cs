@@ -34,10 +34,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         photonView = PhotonView.Get(this);
         joinedplayers = 1;
         playerCountText.text = joinedplayers + "/4 players joined";
+        playerReadyText.text = readyplayers + "/" + joinedplayers + " players are ready";
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        photonView.RPC("SetText", RpcTarget.All);
+    }
+
+    public void OnReadyButtonClicked()
+    {
+        photonView.RPC("ReadyPlayers", RpcTarget.All);
         photonView.RPC("SetText", RpcTarget.All);
     }
 
@@ -46,6 +53,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         joinedplayers = PhotonNetwork.CurrentRoom.PlayerCount;
         playerCountText.text = joinedplayers + "/4 players joined";
-        //playerReadyText.text = readyplayers + "/" + readyplayers + " players are ready";
+        playerReadyText.text = readyplayers + "/" + joinedplayers + " players are ready";
+    }
+
+    [PunRPC]
+    int ReadyPlayers()
+    {
+        readyplayers++;
+        return readyplayers;
     }
 }
