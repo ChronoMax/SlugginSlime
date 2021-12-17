@@ -31,6 +31,8 @@ public class SlimeController : MonoBehaviour
 
     private bool useFirstPersonCam = false;
 
+    public GameObject deathParticle;
+
 
     private void Start()
     {
@@ -45,8 +47,6 @@ public class SlimeController : MonoBehaviour
             oldCamPosition = cam.localPosition;
             oldCamRotation = cam.localEulerAngles;
         }
-
-        //View.RPC("TeamSetup", RpcTarget.AllBuffered, Color.red.ToString());
     }
 
     [PunRPC]
@@ -79,7 +79,13 @@ public class SlimeController : MonoBehaviour
             ChangeCameraModes();
         }
 
-        if (transform.localScale != targetSize)
+        if (transform.localScale.y <= 0.75f)
+        {
+            GameObject particle = Instantiate(deathParticle, transform.position + (transform.up * 0.75f), Quaternion.Euler(-90, 0, 0));
+            Destroy(particle, 1f);
+            Destroy(gameObject);
+        }
+        else if (transform.localScale != targetSize)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, targetSize, Time.deltaTime);
         }

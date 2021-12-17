@@ -1245,6 +1245,7 @@ MonoBehaviour:
   launchForce: {x: 4, y: 2}
   cameraOffset: {x: 0, y: 0, z: 0}
   HitBoxScaling: 1
+  deathParticle: {fileID: 5712482879521359636, guid: eb039e2a67e2c424ca19b6baf3984454, type: 3}
 --- !u!54 &1844683914
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1420,6 +1421,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7623533151958230513, guid: c94231e8ffa08f54fbe4883b5c2d6c27, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c2d76f3e0e3fcb248bf86ad80084e225, type: 2}
+    - target: {fileID: 7623533152542123744, guid: c94231e8ffa08f54fbe4883b5c2d6c27, type: 3}
+      propertyPath: deathParticle
+      value: 
+      objectReference: {fileID: 5712482879521359636, guid: eb039e2a67e2c424ca19b6baf3984454, type: 3}
     - target: {fileID: 7623533152542123745, guid: c94231e8ffa08f54fbe4883b5c2d6c27, type: 3}
       propertyPath: m_Size.x
       value: 0.25
@@ -1476,6 +1485,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7623533152844308461, guid: c94231e8ffa08f54fbe4883b5c2d6c27, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c2d76f3e0e3fcb248bf86ad80084e225, type: 2}
+    - target: {fileID: 7623533153135095304, guid: c94231e8ffa08f54fbe4883b5c2d6c27, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c2d76f3e0e3fcb248bf86ad80084e225, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c94231e8ffa08f54fbe4883b5c2d6c27, type: 3}
 --- !u!1 &2051892615 stripped

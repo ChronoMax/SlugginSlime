@@ -12,6 +12,10 @@ public class TargetDummyBehaviour : MonoBehaviour
 
     private Vector3 targetSize = Vector3.one;
 
+    private ParticleSystemRenderer particleSys;
+
+    public GameObject deathParticle;
+
     private void Start()
     {
         targetSize = slime * Vector3.one;
@@ -20,7 +24,15 @@ public class TargetDummyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.localScale != targetSize)
+        if (transform.localScale.y <= 0.75f)
+        {
+            GameObject particle = Instantiate(deathParticle, transform.position + (transform.up * 0.75f), Quaternion.Euler(-90, 0, 0));
+            Destroy(particle, 1f);
+            particleSys = particle.GetComponent<ParticleSystemRenderer>();
+            particleSys.material.color = transform.GetChild(0).GetComponent<Renderer>().material.color;
+            Destroy(gameObject);
+        }
+        else if (transform.localScale != targetSize)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, targetSize, Time.deltaTime);
         }
@@ -36,8 +48,7 @@ public class TargetDummyBehaviour : MonoBehaviour
         }
         else
         {
-            targetSize = Vector3.zero * 0.1f;
-            Destroy(gameObject, 10);
+            targetSize = Vector3.one * 0.5f;
         }
     }
 
