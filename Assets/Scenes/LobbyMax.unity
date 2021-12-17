@@ -645,7 +645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCountText: {fileID: 1743644045}
   playerReadyText: {fileID: 1786329828}
-  readyButton: {fileID: 1321983747}
+  readyBttnText: {fileID: 656972218}
 --- !u!4 &1558423571
 Transform:
   m_ObjectHideFlags: 0

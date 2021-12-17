@@ -6,72 +6,72 @@ using UnityEngine.UI;
 using Photon.Realtime;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
-
 {
-    public static LobbyManager Instance;
-
     [SerializeField]
     Text playerCountText;
-    int joinedplayers = 0, readyplayers;
+    int joinedplayers = 1, readyplayers;
 
     [SerializeField]
     Text playerReadyText;
 
+    [SerializeField]
+    Text readyBttnText;
+
     PhotonView photonView;
+    bool ready;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-
-        DontDestroyOnLoad(this.gameObject);
-    }
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         photonView = PhotonView.Get(this);
-        joinedplayers = 1;
         playerCountText.text = joinedplayers + "/4 players joined";
-        playerReadyText.text = readyplayers + "/" + joinedplayers + " players are ready";
-    }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        photonView.RPC("SetText", RpcTarget.All);
+        playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
+        photonView.RPC("UpdateText", RpcTarget.AllBuffered);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        photonView.RPC("ReadyPlayers", RpcTarget.All);
-        photonView.RPC("SetText", RpcTarget.All);
+        base.OnPlayerLeftRoom(otherPlayer);
+        joinedplayers--;
+        photonView.RPC("RemoveReadyPlayers", RpcTarget.AllBuffered);
     }
 
     public void OnReadyButtonClicked()
     {
-        photonView.RPC("ReadyPlayers", RpcTarget.AllBuffered);
-        photonView.RPC("SetText", RpcTarget.AllBuffered);
+        if (!ready)
+        {
+            photonView.RPC("AddReadyPlayers", RpcTarget.All);
+            readyBttnText.text = "Unready";
+            ready = true;
+        }
+        else if (ready)
+        {
+            photonView.RPC("RemoveReadyPlayers", RpcTarget.All);
+            readyBttnText.text = "Ready";
+            ready = false;
+        }
     }
-
+    
     [PunRPC]
-    void SetText()
+    int AddReadyPlayers()
     {
-        playerCountText.text = joinedplayers + "/4 players joined";
-        playerReadyText.text = readyplayers + "/" + joinedplayers + " players are ready";
+        readyplayers++;
+        photonView.RPC("UpdateText", RpcTarget.All);
+        return readyplayers;
     }
 
     [PunRPC]
-    int ReadyPlayers()
+    int RemoveReadyPlayers()
+    {
+        readyplayers--;
+        photonView.RPC("UpdateText", RpcTarget.AllBuffered);
+        return readyplayers;
+    }
+
+    [PunRPC]
+    void UpdateText()
     {
         joinedplayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        readyplayers++;
-
-        if (readyplayers >= joinedplayers)
-        {
-            readyplayers = joinedplayers;
-        }
-
-        return readyplayers;
+        playerCountText.text = joinedplayers + "/4 players joined";
+        playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
     }
 }
