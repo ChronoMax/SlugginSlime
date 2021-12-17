@@ -25,27 +25,29 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         photonView = PhotonView.Get(this);
         playerCountText.text = joinedplayers + "/4 players joined";
         playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
-        photonView.RPC("UpdateText", RpcTarget.AllBuffered);
+        photonView.RPC("UpdateText", RpcTarget.All);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
         joinedplayers--;
-        photonView.RPC("RemoveReadyPlayers", RpcTarget.AllBuffered);
+        readyplayers = 0;
+        photonView.RPC("UpdateReadyPlayers", RpcTarget.All);
+        photonView.RPC("UpdateText", RpcTarget.All);
     }
 
     public void OnReadyButtonClicked()
     {
         if (!ready)
         {
-            photonView.RPC("AddReadyPlayers", RpcTarget.All);
+            photonView.RPC("AddReadyPlayers", RpcTarget.AllBuffered);
             readyBttnText.text = "Unready";
             ready = true;
         }
         else if (ready)
         {
-            photonView.RPC("RemoveReadyPlayers", RpcTarget.All);
+            photonView.RPC("RemoveReadyPlayers", RpcTarget.AllBuffered);
             readyBttnText.text = "Ready";
             ready = false;
         }
@@ -63,7 +65,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     int RemoveReadyPlayers()
     {
         readyplayers--;
-        photonView.RPC("UpdateText", RpcTarget.AllBuffered);
+        photonView.RPC("UpdateText", RpcTarget.All);
+        return readyplayers;
+    }
+
+    [PunRPC]
+    int UpdateReadyPlayers()
+    {
+        if (ready)
+        {
+            photonView.RPC("AddReadyPlayers", RpcTarget.All);
+        }
         return readyplayers;
     }
 
