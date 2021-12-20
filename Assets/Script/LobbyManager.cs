@@ -28,6 +28,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         photonView.RPC("UpdateText", RpcTarget.All);
     }
 
+    //When a player leaves the room
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
@@ -37,6 +38,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         photonView.RPC("UpdateText", RpcTarget.All);
     }
 
+    //When the ready button is clicked, the follwing will happen
     public void OnReadyButtonClicked()
     {
         if (!ready)
@@ -53,6 +55,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
     
+    //Adding player to the ready int
     [PunRPC]
     int AddReadyPlayers()
     {
@@ -61,6 +64,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         return readyplayers;
     }
 
+    //Removing a player from the ready int
     [PunRPC]
     int RemoveReadyPlayers()
     {
@@ -69,6 +73,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         return readyplayers;
     }
 
+    //updating the ready int
     [PunRPC]
     int UpdateReadyPlayers()
     {
@@ -79,6 +84,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         return readyplayers;
     }
 
+    //Updating the text for all clients
     [PunRPC]
     void UpdateText()
     {
