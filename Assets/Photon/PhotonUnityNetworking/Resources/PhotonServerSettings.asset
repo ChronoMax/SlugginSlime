@@ -53,6 +53,8 @@ MonoBehaviour:
   - Test
   - CheckSpawnPoints
   - SelectedSlot
+  - updateSelectedSlotList
+  - senseSelectedSlot
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -33,7 +33,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         playerCountText.text = joinedplayers + "/4 players joined";
         playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
         photonView.RPC("UpdateText", RpcTarget.All);
-        photonView.RPC("SelectedSlot", RpcTarget.AllBuffered);
+        StartCoroutine(SelectedSlot());
+
         StartCoroutine(SpawnPlayerInTube());
     }
 
@@ -44,8 +45,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         joinedplayers--;
         readyplayers = 0;
         photonView.RPC("UpdateReadyPlayers", RpcTarget.All);
-        photonView.RPC("UpdateText", RpcTarget.All);
-        photonView.RPC("SelectedSlot", RpcTarget.AllBuffered);
+        photonView.RPC("UpdateText", RpcTarget.All);      
+        photonView.RPC("updateSelectedSlotList", RpcTarget.All);      
     }
 
     //When the ready button is clicked, the follwing will happen
@@ -104,9 +105,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    [PunRPC]
-    int SelectedSlot()
+    IEnumerator SelectedSlot()
     {
+        yield return new WaitForSeconds(1);
+
         for (int i = 0; i < playerSlot.Count; i++)
         {
             if (!playerSlot[i])
@@ -117,7 +119,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             }
         }
         print("returned selected int");
-        return selectedSlot;
+        photonView.RPC("senseSelectedSlot", RpcTarget.AllBuffered, selectedSlot);
+    }
+
+    [PunRPC]
+    void senseSelectedSlot(int slotNumber)
+    {
+        print(slotNumber + "NewPlayerSlot");
+        playerSlot[slotNumber] = true;
+    }
+
+    [PunRPC]
+    void updateSelectedSlotList()
+    {
+        playerSlot[selectedSlot] = false;
     }
 
     IEnumerator SpawnPlayerInTube()
