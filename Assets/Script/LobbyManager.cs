@@ -45,8 +45,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         joinedplayers--;
         readyplayers = 0;
         photonView.RPC("UpdateReadyPlayers", RpcTarget.All);
-        photonView.RPC("UpdateText", RpcTarget.All);      
-        photonView.RPC("updateSelectedSlotList", RpcTarget.All);      
+        photonView.RPC("UpdateText", RpcTarget.All);
     }
 
     //When the ready button is clicked, the follwing will happen
@@ -127,12 +126,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         print(slotNumber + "NewPlayerSlot");
         playerSlot[slotNumber] = true;
-    }
-
-    [PunRPC]
-    void updateSelectedSlotList()
-    {
-        playerSlot[selectedSlot] = false;
     }
 
     IEnumerator SpawnPlayerInTube()
