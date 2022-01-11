@@ -9,7 +9,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     Text playerCountText;
-    int joinedplayers = 1, readyplayers;
+    int joinedplayers = 1, readyplayers, numberOfPlayers;
 
     [SerializeField]
     Text playerReadyText;
@@ -20,12 +20,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     PhotonView photonView;
     bool ready;
 
+    [SerializeField]
+    List<Transform> spawnpoints;
+    [SerializeField]
+    List<bool> playerSlot;
+    int selectedSlot, newSelectedSlot;
+
+    #region Text and Ready behaviour
     private void Start()
     {
         photonView = PhotonView.Get(this);
         playerCountText.text = joinedplayers + "/4 players joined";
         playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
         photonView.RPC("UpdateText", RpcTarget.All);
+        photonView.RPC("SelectedSlot", RpcTarget.AllBuffered);
+        StartCoroutine(SpawnPlayerInTube());
     }
 
     //When a player leaves the room
@@ -36,6 +45,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         readyplayers = 0;
         photonView.RPC("UpdateReadyPlayers", RpcTarget.All);
         photonView.RPC("UpdateText", RpcTarget.All);
+        photonView.RPC("SelectedSlot", RpcTarget.AllBuffered);
     }
 
     //When the ready button is clicked, the follwing will happen
@@ -92,4 +102,35 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         playerCountText.text = joinedplayers + "/4 players joined";
         playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
     }
+    #endregion
+
+    [PunRPC]
+    int SelectedSlot()
+    {
+        for (int i = 0; i < playerSlot.Count; i++)
+        {
+            if (!playerSlot[i])
+            {
+                selectedSlot = i;
+                playerSlot[i] = true;
+                break;
+            }
+        }
+        print("returned selected int");
+        return selectedSlot;
+    }
+
+    IEnumerator SpawnPlayerInTube()
+    {
+        yield return new WaitForSeconds(1);
+        print(selectedSlot);
+        int _spawnpoint = selectedSlot;
+
+            PhotonNetwork.Instantiate("Player", new Vector3(
+            spawnpoints[_spawnpoint].position.x,
+            spawnpoints[_spawnpoint].position.y,
+            spawnpoints[_spawnpoint].position.z),
+            Quaternion.identity);
+    }
+
 }
