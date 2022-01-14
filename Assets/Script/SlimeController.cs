@@ -47,47 +47,51 @@ public class SlimeController : MonoBehaviour
             oldCamPosition = cam.localPosition;
             oldCamRotation = cam.localEulerAngles;
         }
+
+        View.RPC("TeamSetup", RpcTarget.AllBuffered, new Vector3(Color.red.r, Color.red.b, Color.red.g));
     }
 
     [PunRPC]
-    public void TeamSetup(Color color)
+    public void TeamSetup(Vector3 color)
     {
-        tag = color.ToString();
-        GetComponent<Renderer>().material.color = color;
+        //tag = color.ToString();
+        GetComponent<Renderer>().material.color = new Color(color.x, color.y, color.z);
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        Movement();
-
-        CameraMovment();
-
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (View.IsMine)
         {
-            DecreaseSize();
-        }
+            Movement();
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Attack();
-        }
+            CameraMovment();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ChangeCameraModes();
-        }
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                View.RPC("DecreaseSize", RpcTarget.AllBuffered, false);
+            }
 
-        if (transform.localScale.y <= 0.75f)
-        {
-            GameObject particle = Instantiate(deathParticle, transform.position + (transform.up * 0.75f), Quaternion.Euler(-90, 0, 0));
-            Destroy(particle, 1f);
-            Destroy(gameObject);
-        }
-        else if (transform.localScale != targetSize)
-        {
-            transform.localScale = Vector3.Lerp(transform.localScale, targetSize, Time.deltaTime);
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Attack();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ChangeCameraModes();
+            }
+
+            if (transform.localScale != targetSize)
+            {
+                transform.localScale = Vector3.Lerp(transform.localScale, targetSize, Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
         }
     }
 
@@ -131,36 +135,48 @@ public class SlimeController : MonoBehaviour
         StartCoroutine(MoveAndRotateCamera());
     }
 
+    [PunRPC]
     private void IncreaseSize()
     {
-        slime++;
-        targetSize = slime * Vector3.one;
+        if (View.IsMine)
+        {
+            slime++;
+            targetSize = slime * Vector3.one;
+        }
     }
 
-    public void DecreaseSize()
+    [PunRPC]
+    private void DecreaseSize(bool EnemyAttack)
     {
         if (slime - 1 > 0)
         {
             slime--;
             targetSize = slime * Vector3.one;
-            LaunchSlime();
+            LaunchSlime(Random.Range(0, 360f));
         }
-        else
+        else if (EnemyAttack)
         {
-            MovementSpeed = 0;
-            turnSpeed = 0;
-            targetSize = Vector3.zero * 0.1f;
-            Destroy(gameObject, 10);
+            View.RPC("Death", RpcTarget.AllBuffered);
         }
     }
 
-    private void LaunchSlime()
+    //[PunRPC]
+    private void LaunchSlime(float angle)
     {
-        Transform slimePiece = Instantiate(slimeChunk, transform.position + (transform.up * transform.localScale.y), Quaternion.Euler(0, Random.Range(0, 360), 0)).transform;
+        Transform slimePiece = PhotonNetwork.Instantiate("slimeChunk", transform.position + (transform.up * transform.localScale.y), Quaternion.Euler(0, angle, 0)).transform;
 
         Rigidbody slimeRb = slimePiece.GetComponent<Rigidbody>();
         slimeRb.AddForce(((slimePiece.forward * launchForce.x) + (slimePiece.up * launchForce.y)), ForceMode.Impulse);
         slimeRb.AddTorque(launchForce, ForceMode.Impulse);
+    }
+
+    [PunRPC]
+    private void Death()
+    {
+        MovementSpeed = 0;
+        turnSpeed = 0;
+        targetSize = Vector3.zero * 0.1f;
+        Destroy(gameObject, 10);
     }
 
     private void Attack()
@@ -181,7 +197,7 @@ public class SlimeController : MonoBehaviour
                 }
                 else if (col.TryGetComponent(out slimeScript))
                 {
-                    slimeScript.DecreaseSize();
+                    slimeScript.GetPhotonView().RPC("DecreaseSize", RpcTarget.AllBuffered, true);
                 }
             }
         }
@@ -191,15 +207,37 @@ public class SlimeController : MonoBehaviour
     {
         if (collision.collider.CompareTag("slimeChunk"))
         {
-            IncreaseSize();
-            Destroy(collision.gameObject);
+            View.RPC("IncreaseSize", RpcTarget.AllBuffered);
+
+            //collision.gameObject.GetComponent<PhotonView>().TransferOwnership(View.Owner);
+
+            //collision.gameObject.SetActive(false);
+
+            //Debug.Log(collision.gameObject.GetComponent<PhotonView>().Owner);
+
+            //PhotonNetwork.Destroy(collision.gameObject);
+
+            View.RPC("DeleteSlimeChunk", RpcTarget.All, collision.gameObject.GetComponent<PhotonView>().ViewID);
+        }
+    }
+
+    [PunRPC]
+    private void DeleteSlimeChunk(int id)
+    {
+        PhotonView view = PhotonView.Find(id);
+        if (view.IsMine)
+        {
+            PhotonNetwork.Destroy(view.gameObject);
         }
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + (transform.forward * targetSize.z), targetSize.z / 2 * HitBoxScaling);
+        if (View.IsMine)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position + (transform.forward * targetSize.z), targetSize.z / 2 * HitBoxScaling);
+        }
     }
 
     private IEnumerator MoveAndRotateCamera()
@@ -210,5 +248,10 @@ public class SlimeController : MonoBehaviour
             cam.localEulerAngles = Vector3.Lerp(cam.localEulerAngles, targetCamRotation, Time.deltaTime * 10);
             yield return new WaitForSeconds(0.000001f);
         }
+    }
+
+    public PhotonView GetPhotonView()
+    {
+        return View;
     }
 }
