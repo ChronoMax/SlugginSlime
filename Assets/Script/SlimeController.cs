@@ -137,7 +137,7 @@ public class SlimeController : MonoBehaviour
         targetSize = slime * Vector3.one;
     }
 
-    private void DecreaseSize()
+    public void DecreaseSize()
     {
         if (slime - 1 > 0)
         {

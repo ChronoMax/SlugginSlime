@@ -1397,11 +1397,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b0129f313cef4b4fb02fc9c26e5ed08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlineScene: Mats_TestLevel
-  createButton: {fileID: 1471839949}
-  joinButton: {fileID: 375595067}
-  debugText: {fileID: 1477378945}
-  roomName: {fileID: 818401458}
 --- !u!4 &1310693256
 Transform:
   m_ObjectHideFlags: 0
@@ -1428,13 +1423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aefae2aff179071419f430233089ef4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlineScene: Mats_TestLevel
-  debugText: {fileID: 1477378945}
-  roomName: {fileID: 818401458}
-  playButton: {fileID: 902148660}
-  createButton: {fileID: 1471839949}
-  joinButton: {fileID: 375595067}
-  textButton: {fileID: 175346067}
 --- !u!1 &1471839947
 GameObject:
   m_ObjectHideFlags: 0
