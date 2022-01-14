@@ -57,7 +57,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         base.OnPlayerLeftRoom(otherPlayer);
         joinedplayers--;
         readyplayers = 0;
-        photonView.RPC("UpdateReadyPlayers", RpcTarget.All);
+        UpdateReadyPlayers();
         photonView.RPC("UpdateText", RpcTarget.All);
     }
 
@@ -97,7 +97,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
 
     //updating the ready int
-    [PunRPC]
     int UpdateReadyPlayers()
     {
         if (ready)
