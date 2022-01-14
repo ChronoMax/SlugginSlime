@@ -100,7 +100,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [PunRPC]
     int UpdateReadyPlayers()
     {
-        CheckForMasterClient();
         if (ready)
         {
             photonView.RPC("AddReadyPlayers", RpcTarget.All);
@@ -112,6 +111,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void UpdateText()
     {
+        CheckForMasterClient();
         joinedplayers = PhotonNetwork.CurrentRoom.PlayerCount;
         playerCountText.text = joinedplayers + "/4 players joined";
         playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
