@@ -34,8 +34,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     List<Transform> spawnpoints;
     [SerializeField]
     List<bool> playerSlot;
-    int selectedSlot, newSelectedSlot;
+    int selectedSlot;
 
+    //This region is responsible for how the text adapts to the amount of players in the game.
+    //Also responsible for the ready/unready system.
     #region Text and Ready behaviour
     private void Start()
     {
@@ -122,6 +124,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
+    //Region responsible for the player spawns.
+    #region SpawnSlot behavior
     IEnumerator SelectedSlot()
     {
         yield return new WaitForSeconds(1);
@@ -158,7 +162,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             spawnpoints[_spawnpoint].position.z),
             Quaternion.identity);
     }
+    #endregion
 
+    //Region responsible for starting the game.
+    #region StartGame behavior
     public void OnClickedStartGame()
     {
         if (startGame)
@@ -181,5 +188,5 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             startBtnGameObject.SetActive(true);
         }
     }
-
+    #endregion
 }
