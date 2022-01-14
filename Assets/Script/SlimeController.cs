@@ -146,7 +146,7 @@ public class SlimeController : MonoBehaviour
     }
 
     [PunRPC]
-    private void DecreaseSize(bool EnemyAttack)
+    public void DecreaseSize(bool EnemyAttack)
     {
         if (slime - 1 > 0)
         {
