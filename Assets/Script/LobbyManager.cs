@@ -116,12 +116,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         playerCountText.text = joinedplayers + "/4 players joined";
         playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
 
-        if (PhotonNetwork.IsMasterClient && readyplayers >= 2)
+        if (PhotonNetwork.IsMasterClient && readyplayers >= 2 && readyplayers == joinedplayers)
         {
             startGame = true;
             startBtn.interactable = true;
         }
-        else if (PhotonNetwork.IsMasterClient && readyplayers < 2)
+        else if (PhotonNetwork.IsMasterClient && readyplayers < 2 || readyplayers < joinedplayers)
         {
             startGame = false;
             startBtn.interactable = false;
