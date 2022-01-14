@@ -4,9 +4,13 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
+    [SerializeField]
+    string LevelToLoad;
+
     [SerializeField]
     Text playerCountText;
     int joinedplayers = 1, readyplayers, numberOfPlayers;
@@ -17,8 +21,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField]
     Text readyBttnText;
 
+    [SerializeField]
+    Button startBtn;
+
+    [SerializeField]
+    GameObject startBtnGameObject;
+
     PhotonView photonView;
-    bool ready;
+    bool ready, startGame = false;
 
     [SerializeField]
     List<Transform> spawnpoints;
@@ -29,6 +39,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     #region Text and Ready behaviour
     private void Start()
     {
+        CheckForMasterClient();
         photonView = PhotonView.Get(this);
         playerCountText.text = joinedplayers + "/4 players joined";
         playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
@@ -87,6 +98,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [PunRPC]
     int UpdateReadyPlayers()
     {
+        CheckForMasterClient();
         if (ready)
         {
             photonView.RPC("AddReadyPlayers", RpcTarget.All);
@@ -101,6 +113,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         joinedplayers = PhotonNetwork.CurrentRoom.PlayerCount;
         playerCountText.text = joinedplayers + "/4 players joined";
         playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
+
+        if (PhotonNetwork.IsMasterClient && readyplayers == joinedplayers)
+        {
+            startGame = true;
+            startBtn.interactable = true;
+        }
     }
     #endregion
 
@@ -139,6 +157,29 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             spawnpoints[_spawnpoint].position.y,
             spawnpoints[_spawnpoint].position.z),
             Quaternion.identity);
+    }
+
+    public void OnClickedStartGame()
+    {
+        if (startGame)
+        {
+            PhotonNetwork.AutomaticallySyncScene = true;
+            photonView.RPC("LoadLevel", RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    void LoadLevel()
+    {
+        PhotonNetwork.LoadLevel(LevelToLoad);
+    }
+
+    void CheckForMasterClient()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            startBtnGameObject.SetActive(true);
+        }
     }
 
 }
