@@ -143,21 +143,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
                 break;
             }
         }
-        print("returned selected int");
+        //print("returned selected int");
         photonView.RPC("senseSelectedSlot", RpcTarget.AllBuffered, selectedSlot);
     }
 
     [PunRPC]
     void senseSelectedSlot(int slotNumber)
     {
-        print(slotNumber + "NewPlayerSlot");
+        //print(slotNumber + "NewPlayerSlot");
         playerSlot[slotNumber] = true;
     }
 
     IEnumerator SpawnPlayerInTube()
     {
         yield return new WaitForSeconds(1);
-        print(selectedSlot);
+        //print(selectedSlot);
         int _spawnpoint = selectedSlot;
 
             PhotonNetwork.Instantiate("Player", new Vector3(
