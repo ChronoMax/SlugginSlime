@@ -9,7 +9,8 @@ public class SpikeTrapController : MonoBehaviour
     private Animator animationController;
     private SlimeController slimeScript;
 
-    private float resetTime = 3;
+    public float damageDelay = 1;
+    public float resetTime = 3;
     private float resetTimer;
 
     private void Start()
@@ -43,7 +44,7 @@ public class SpikeTrapController : MonoBehaviour
 
     private IEnumerator DealDamage()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(damageDelay);
         resetTimer = resetTime;
         Collider[] hitCol = Physics.OverlapBox(transform.position, Vector3.one * 0.5f);
         foreach (Collider col in hitCol)
@@ -52,7 +53,7 @@ public class SpikeTrapController : MonoBehaviour
             {
                 if (col.TryGetComponent(out slimeScript))
                 {
-                    slimeScript.DecreaseSize();
+                    slimeScript.GetPhotonView().RPC("DecreaseSize", RpcTarget.AllBuffered, true);
                 }
             }
         }
