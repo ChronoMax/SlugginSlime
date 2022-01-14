@@ -125,6 +125,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             startGame = false;
             startBtn.interactable = false;
         }
+
+        if (joinedplayers < 4)
+        {
+            PhotonNetwork.CurrentRoom.IsVisible = true;
+            PhotonNetwork.CurrentRoom.IsOpen = true;
+            print("Room is open");
+        }
+
+        if (joinedplayers == 4)
+        {
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            print("Room is closed");
+        }
     }
     #endregion
 
