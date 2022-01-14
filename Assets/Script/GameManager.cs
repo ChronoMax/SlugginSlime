@@ -14,11 +14,21 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] GameObject settingsPanel;
     [SerializeField] GameObject fpsCounter;
 
+    [SerializeField] Dropdown m_Dropdown;
+    [SerializeField] List<string> onlineScenes;
+
     private float timer;
     private float hudRefreshRate = 1f;
     // Start is called before the first frame update
     void Start()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            m_Dropdown.interactable = true;
+            m_Dropdown.ClearOptions();
+            m_Dropdown.AddOptions(onlineScenes);
+        }
+
         RoomName.text = PhotonNetwork.CurrentRoom.Name;
 
         PhotonNetwork.Instantiate(objectToSpawn.name, Vector3.zero, Quaternion.identity);

@@ -1295,7 +1295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aefae2aff179071419f430233089ef4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlineScene: TestLevel
   debugText: {fileID: 1477378945}
   roomName: {fileID: 818401458}
   playButton: {fileID: 902148660}

@@ -8,8 +8,6 @@ using Photon.Pun;
 public class MatchMaking : MonoBehaviourPunCallbacks
 {
     [Header("UI")]
-    [SerializeField] List<string> onlineScenes;
-    [SerializeField] Dropdown m_Dropdown;
     [SerializeField] Text debugText;
     [SerializeField] InputField roomName;
 
@@ -24,9 +22,6 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     private bool foundRoom = false;
     void Start()
     {
-        m_Dropdown.ClearOptions();
-        m_Dropdown.AddOptions(onlineScenes);
-
         if (!PhotonNetwork.IsConnected){
             debugText.text = "Connecting to servers...";
             PhotonNetwork.ConnectUsingSettings();
@@ -123,7 +118,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         debugText.text = "Joining...";
-        PhotonNetwork.LoadLevel(m_Dropdown.value);
+        PhotonNetwork.LoadLevel("TestLevel");
     }
 
     //Called when connected to the masterclient
