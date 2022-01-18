@@ -39,16 +39,23 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
-  - TeamSetup
-  - DecreaseSize
-  - IncreaseSize
-  - Death
-  - CollectSlime
-  - DestroySlime
-  - LaunchSlime
-  - destroySlimeChunk
-  - DeleteSlimeChunk
-  - TriggerTrap
+  - SetText
+  - ReadyPlayers
+  - UpdateNumbers
+  - UpdateText
+  - JoindPlayers
+  - AddReadyPlayers
+  - RemoveReadyPlayers
+  - UpdateReadyPlayers
+  - AddPlayerToList
+  - SpawnPlayerInTube
+  - UpdatePlayerSlot
+  - Test
+  - CheckSpawnPoints
+  - SelectedSlot
+  - updateSelectedSlotList
+  - senseSelectedSlot
+  - LoadLevel
   DisableAutoOpenWizard: 1
-  ShowSettings: 1
+  ShowSettings: 0
   DevRegionSetOnce: 1

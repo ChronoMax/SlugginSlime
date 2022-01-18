@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/PhotonMainMenu.unity
     guid: 776a7fdd5492ba441b2ee3a83429c634
   - enabled: 1
+    path: Assets/Scenes/LobbyMax.unity
+    guid: b9e7f0adb5847104d9e565459abed8df
+  - enabled: 1
     path: Assets/Scenes/TestLevel.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
-    path: Assets/Scenes/Mats_TestLevel.unity
-    guid: 9f90118f5420da849b38317829c993d5
   m_configObjects: {}
