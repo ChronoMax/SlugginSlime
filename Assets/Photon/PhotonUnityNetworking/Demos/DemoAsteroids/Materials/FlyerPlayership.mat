@@ -103,7 +103,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
+<<<<<<< HEAD
+        m_Texture: {fileID: 2800000, guid: 008b5d010f4eecd4b94cf531fe81600d, type: 3}
+=======
         m_Texture: {fileID: 2800000, guid: 6817a5922dc06b54aa74df7a089c7ab6, type: 3}
+>>>>>>> main
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -226,7 +230,11 @@ Material:
     - _LinkDetailsWithBase: 0
     - _MaterialID: 4
     - _Metallic: 0
+<<<<<<< HEAD
+    - _MetallicRemapMax: 1
+=======
     - _MetallicRemapMax: 0
+>>>>>>> main
     - _MetallicRemapMin: 0
     - _Mode: 0
     - _NormalMapSpace: 0
