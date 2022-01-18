@@ -42,13 +42,13 @@ public class SlimeController : MonoBehaviour
 
         if (View.IsMine)
         {
-            cam = Camera.main.transform;
+            cam = Camera.current.transform;
             cam.parent = transform;
             oldCamPosition = cam.localPosition;
             oldCamRotation = cam.localEulerAngles;
         }
 
-        View.RPC("TeamSetup", RpcTarget.AllBuffered, new Vector3(Color.red.r, Color.red.b, Color.red.g));
+        //View.RPC("TeamSetup", RpcTarget.AllBuffered, new Vector3(Color.red.r, Color.red.b, Color.red.g));
     }
 
     [PunRPC]

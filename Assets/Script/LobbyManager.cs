@@ -189,14 +189,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (startGame)
         {
             PhotonNetwork.AutomaticallySyncScene = true;
-            photonView.RPC("LoadLevel", RpcTarget.All);
+            PhotonNetwork.LoadLevel(LevelToLoad);
+            //photonView.RPC("LoadLevel", RpcTarget.All);
         }
     }
 
     [PunRPC]
     void LoadLevel()
     {
-        PhotonNetwork.LoadLevel(LevelToLoad);
+        //PhotonNetwork.LoadLevel(LevelToLoad);
     }
 
     void CheckForMasterClient()

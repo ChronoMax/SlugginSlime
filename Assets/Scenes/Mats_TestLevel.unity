@@ -933,7 +933,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 972896139}
   sceneViewId: 4
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1087,7 +1088,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1678700152}
-  sceneViewId: 3
+  sceneViewId: 10
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &1844683906
@@ -1411,7 +1412,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 2028226834}
   sceneViewId: 9
   InstantiationId: 0
   isRuntimeInstantiated: 0
