@@ -130,14 +130,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.CurrentRoom.IsVisible = true;
             PhotonNetwork.CurrentRoom.IsOpen = true;
-            print("Room is open");
+            //print("Room is open");
         }
 
         if (joinedplayers == 4)
         {
             PhotonNetwork.CurrentRoom.IsVisible = false;
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            print("Room is closed");
+            //print("Room is closed");
         }
     }
     #endregion
@@ -188,6 +188,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (startGame)
         {
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            //print("Room is closed");
             //PhotonNetwork.AutomaticallySyncScene = true;
             photonView.RPC("LoadLevel", RpcTarget.All);
         }
