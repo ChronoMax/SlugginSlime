@@ -23,25 +23,28 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     private bool foundRoom = false;
     void Start()
     {
-        debugText.text = "Connecting to servers...";
-        PhotonNetwork.ConnectUsingSettings();
-        PhotonNetwork.ConnectToRegion("eu");
+        if (!PhotonNetwork.IsConnected)
+        {
+            debugText.text = "Connecting to servers...";
+            PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.ConnectToRegion("eu");
 
-        playButton.interactable = false;
-        joinButton.interactable = false;
+            playButton.interactable = false;
+            joinButton.interactable = false;
+        }
     }
 
     public void Play()
     {
-        if(PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected)
         {
-            StartCoroutine(JoinRandomRoom());   
+            StartCoroutine(JoinRandomRoom());
         }
     }
 
     public void SearchGame()
     {
-        if(PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected)
         {
             StartCoroutine(CreateRandomRoom());
         }
@@ -49,10 +52,10 @@ public class MatchMaking : MonoBehaviourPunCallbacks
 
     public void UpdateRoomList()
     {
-        if(roomName.text.Length == 5)
+        if (roomName.text.Length == 5)
         {
             foundRoom = CheckRoom();
-            if(CheckRoom())
+            if (CheckRoom())
             {
                 textButton.text = "Join";
             }
@@ -60,7 +63,8 @@ public class MatchMaking : MonoBehaviourPunCallbacks
             {
                 textButton.text = "Room not found";
             }
-        }else
+        }
+        else
         {
             textButton.text = "Create";
         }
@@ -86,7 +90,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
             MaxPlayers = (byte)4, // RoomSize in Bytes
         };
 
-        if(roomName.text.Length == 5 && foundRoom == true)
+        if (roomName.text.Length == 5 && foundRoom == true)
         {
             debugText.text = $"Joining {roomName.text} game..";
             PhotonNetwork.JoinRoom(roomName.text);
@@ -100,11 +104,11 @@ public class MatchMaking : MonoBehaviourPunCallbacks
 
     private bool CheckRoom()
     {
-        if(roomList != null)
+        if (roomList != null)
         {
-            foreach(RoomInfo room in roomList)
+            foreach (RoomInfo room in roomList)
             {
-                if(room.Name == roomName.text)
+                if (room.Name == roomName.text)
                 {
                     return true;
                 }

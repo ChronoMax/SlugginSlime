@@ -396,6 +396,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4884567961849361987, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 312082401}
+    - target: {fileID: 4884567961849361987, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ButtonExitRoom
+      objectReference: {fileID: 0}
+    - target: {fileID: 4884567961849361987, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4884567961953703042, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
       propertyPath: m_Pivot.x
       value: 0
