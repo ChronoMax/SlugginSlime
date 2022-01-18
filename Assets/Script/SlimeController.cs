@@ -19,7 +19,7 @@ public class SlimeController : MonoBehaviour
 
     private Vector3 targetSize = Vector3.one;
 
-    Transform cam;
+    public Transform cam;
     private Vector3 targetCamPosition;
     private Vector3 targetCamRotation;
 
@@ -27,7 +27,6 @@ public class SlimeController : MonoBehaviour
     private Vector3 oldCamRotation;
 
     private PhotonView View;
-
 
     private bool useFirstPersonCam = false;
 
@@ -42,7 +41,7 @@ public class SlimeController : MonoBehaviour
 
         if (View.IsMine)
         {
-            cam = Camera.current.transform;
+            //cam = Camera.current.transform;
             cam.parent = transform;
             oldCamPosition = cam.localPosition;
             oldCamRotation = cam.localEulerAngles;
