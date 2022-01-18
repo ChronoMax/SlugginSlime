@@ -486,7 +486,7 @@ MonoBehaviour:
   turnSpeed: 9
   slimeChunk: {fileID: 651031165683186534, guid: 83aa0548489f0dc47b9114901fc3b25a, type: 3}
   launchForce: {x: 4, y: 2}
-  cameraOffset: {x: 0, y: 0, z: 0}
+  cameraOffset: {x: 0, y: 3, z: -5}
   HitBoxScaling: 1
   cam: {fileID: 0}
   deathParticle: {fileID: 0}

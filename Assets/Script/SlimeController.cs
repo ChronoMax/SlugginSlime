@@ -19,6 +19,7 @@ public class SlimeController : MonoBehaviour
 
     private Vector3 targetSize = Vector3.one;
 
+    [HideInInspector]
     public Transform cam;
     private Vector3 targetCamPosition;
     private Vector3 targetCamRotation;
@@ -43,6 +44,7 @@ public class SlimeController : MonoBehaviour
         {
             //cam = Camera.current.transform;
             cam.parent = transform;
+            cam.position = cameraOffset;
             oldCamPosition = cam.localPosition;
             oldCamRotation = cam.localEulerAngles;
         }
