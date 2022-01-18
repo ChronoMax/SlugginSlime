@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         PhotonNetwork.LoadLevel("PhotonMainMenu");
+        Destroy(gameObject);
     }
 
     public void ButtonExitRoom()//Button to leave the room
