@@ -52,10 +52,11 @@ public class MatchMaking : MonoBehaviourPunCallbacks
 
     public void UpdateRoomList()
     {
-        if (roomName.text.Length == 5)
+        foundRoom = CheckRoom();
+
+        if(roomName.text.Length > 0)
         {
-            foundRoom = CheckRoom();
-            if (CheckRoom())
+            if (foundRoom)
             {
                 textButton.text = "Join";
             }
@@ -90,7 +91,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
             MaxPlayers = (byte)4, // RoomSize in Bytes
         };
 
-        if (roomName.text.Length == 5 && foundRoom == true)
+        if (foundRoom)
         {
             debugText.text = $"Joining {roomName.text} game..";
             PhotonNetwork.JoinRoom(roomName.text);

@@ -16,9 +16,28 @@ public class GameManager : MonoBehaviourPunCallbacks
     private float timer;
     private float hudRefreshRate = 1f;
 
+    #region Singleton
+    public static GameManager Instance;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    #endregion
+
     void Start()
     {
         RoomName.text = PhotonNetwork.CurrentRoom.Name;
+        DontDestroyOnLoad(gameObject);
     }
     void Update()
     {
@@ -56,5 +75,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void ButtonFPS(bool toggle)//Show fps counter
     {
         fpsCounter.SetActive(toggle);
+    }
+
+    public Text DisableRoomText()
+    {
+        return RoomName;
     }
 }

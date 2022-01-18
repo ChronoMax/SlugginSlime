@@ -396,18 +396,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4884567961849361987, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 312082401}
-    - target: {fileID: 4884567961849361987, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ButtonExitRoom
-      objectReference: {fileID: 0}
-    - target: {fileID: 4884567961849361987, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameManager, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 4884567961953703042, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -496,64 +484,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasMenu
       objectReference: {fileID: 0}
-    - target: {fileID: 4884567963112579502, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 312082401}
-    - target: {fileID: 4884567963112579502, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ButtonFPS
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 572613396, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
---- !u!1 &312082396 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 572613394, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
-  m_PrefabInstance: {fileID: 312082395}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &312082397 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4884567962057200061, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
-  m_PrefabInstance: {fileID: 312082395}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &312082398 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4884567962628267622, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
-  m_PrefabInstance: {fileID: 312082395}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &312082399 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4884567962999574095, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
-  m_PrefabInstance: {fileID: 312082395}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &312082400 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4884567963589127592, guid: d36ebccb1888a344f8e55d230cc424f3, type: 3}
-  m_PrefabInstance: {fileID: 312082395}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &312082401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312082396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6ca03745c02d524da4ed89ea79fb072, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RoomName: {fileID: 312082400}
-  exitPanel: {fileID: 312082399}
-  settingsPanel: {fileID: 312082398}
-  fpsCounter: {fileID: 312082397}
 --- !u!1 &528130033
 GameObject:
   m_ObjectHideFlags: 0

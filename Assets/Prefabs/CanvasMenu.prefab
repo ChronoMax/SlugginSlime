@@ -1,57 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &572613394
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 572613395}
-  - component: {fileID: 572613396}
-  m_Layer: 0
-  m_Name: CanvasManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &572613395
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 572613394}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -813.66235, y: 495.79102, z: -18.7276}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4884567961953703042}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &572613396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 572613394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3475e1784bfe7954e903f2c0b373e21a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RoomName: {fileID: 4884567963589127592}
-  objectToSpawn: {fileID: 6098307381703658406, guid: c9e817a32375a8349aaf7bc9fb52e10f, type: 3}
-  exitPanel: {fileID: 4884567962999574095}
-  settingsPanel: {fileID: 4884567962628267622}
-  fpsCounter: {fileID: 4884567962057200061}
-  onlineScenes:
-  - TestLevel
-  - Test
-  - Extra
 --- !u!1 &4884567961849361985
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,8 +121,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 572613396}
-        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+      - m_Target: {fileID: 2025157903438734397}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ButtonExitRoom
         m_Mode: 1
         m_Arguments:
@@ -197,6 +145,7 @@ GameObject:
   - component: {fileID: 4884567961953703043}
   - component: {fileID: 4884567961953703040}
   - component: {fileID: 4884567961953703041}
+  - component: {fileID: 2025157903438734397}
   m_Layer: 5
   m_Name: CanvasMenu
   m_TagString: Untagged
@@ -219,7 +168,6 @@ RectTransform:
   - {fileID: 4884567962057200062}
   - {fileID: 4884567962628267617}
   - {fileID: 4884567962999574094}
-  - {fileID: 572613395}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -289,6 +237,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2025157903438734397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4884567961953703046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ca03745c02d524da4ed89ea79fb072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RoomName: {fileID: 4884567963589127592}
+  exitPanel: {fileID: 4884567962999574095}
+  settingsPanel: {fileID: 4884567962628267622}
+  fpsCounter: {fileID: 4884567962057200061}
 --- !u!1 &4884567962024882888
 GameObject:
   m_ObjectHideFlags: 0
@@ -1498,7 +1462,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 572613396}
+      - m_Target: {fileID: 2025157903438734397}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ButtonFPS
         m_Mode: 0
