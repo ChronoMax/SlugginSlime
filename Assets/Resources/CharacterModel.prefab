@@ -488,6 +488,7 @@ MonoBehaviour:
   launchForce: {x: 4, y: 2}
   cameraOffset: {x: 0, y: 0, z: 0}
   HitBoxScaling: 1
+  cam: {fileID: 0}
   deathParticle: {fileID: 0}
 --- !u!114 &9135740399379507807
 MonoBehaviour:
