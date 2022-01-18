@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     private float timer;
     private float hudRefreshRate = 1f;
 
+    void Start()
+    {
+        RoomName.text = PhotonNetwork.CurrentRoom.Name;
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
