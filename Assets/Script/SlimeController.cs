@@ -38,7 +38,8 @@ public class SlimeController : MonoBehaviour
     {
         View = GetComponent<PhotonView>();
 
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
+        GameManager.Instance.CursorMode();
 
         if (View.IsMine)
         {
@@ -89,10 +90,10 @@ public class SlimeController : MonoBehaviour
                 transform.localScale = Vector3.Lerp(transform.localScale, targetSize, Time.deltaTime);
             }
 
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                Cursor.lockState = CursorLockMode.None;
-            }
+            //if (Input.GetKey(KeyCode.Escape))
+            //{
+            //    Cursor.lockState = CursorLockMode.None;
+            //}
         }
     }
 

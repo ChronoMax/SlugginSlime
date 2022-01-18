@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     private float timer;
     private float hudRefreshRate = 1f;
 
+    private bool cursorStatus = false;
+
     #region Singleton
     public static GameManager Instance;
 
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            CursorMode();
             exitPanel.SetActive(!exitPanel.activeSelf);
             if (settingsPanel.activeSelf)
             {
@@ -74,5 +77,24 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void ButtonFPS(bool toggle)//Show fps counter
     {
         fpsCounter.SetActive(toggle);
+    }
+
+    public void ButtonResume()
+    {
+        CursorMode();
+    }
+
+    public void CursorMode()
+    {
+        if (cursorStatus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            cursorStatus = false;
+        }
+        else if(!cursorStatus)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            cursorStatus = true;
+        }
     }
 }
