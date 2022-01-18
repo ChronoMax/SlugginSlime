@@ -199,6 +199,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void LoadLevel()
     {
+        GameManager.Instance.RoomText.text = "";
         PhotonNetwork.LoadLevel(LevelToLoad);
     }
 

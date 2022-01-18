@@ -7,34 +7,52 @@ using Photon.Realtime;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-
-    [SerializeField] Text RoomName;
+    public Text RoomText;
     [SerializeField] GameObject exitPanel;
     [SerializeField] GameObject settingsPanel;
     [SerializeField] GameObject fpsCounter;
-    
+
     private float timer;
     private float hudRefreshRate = 1f;
 
+    #region Singleton
+    public static GameManager Instance;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    #endregion
+
     void Start()
     {
-        RoomName.text = PhotonNetwork.CurrentRoom.Name;
+        RoomText.text = PhotonNetwork.CurrentRoom.Name;
+        DontDestroyOnLoad(gameObject);
     }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             exitPanel.SetActive(!exitPanel.activeSelf);
-            if(settingsPanel.activeSelf)
+            if (settingsPanel.activeSelf)
             {
                 settingsPanel.SetActive(!settingsPanel.activeSelf);
                 exitPanel.SetActive(false);
             }
         }
 
-        if(fpsCounter.activeSelf)
+        if (fpsCounter.activeSelf)
         {
-            if(Time.unscaledTime > timer)
+            if (Time.unscaledTime > timer)
             {
                 int fps = (int)(1f / Time.unscaledDeltaTime);
                 fpsCounter.GetComponent<Text>().text = fps.ToString();
