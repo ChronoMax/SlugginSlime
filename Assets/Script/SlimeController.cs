@@ -89,10 +89,10 @@ public class SlimeController : MonoBehaviour
                 transform.localScale = Vector3.Lerp(transform.localScale, targetSize, Time.deltaTime);
             }
 
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                Application.Quit();
-            }
+            //if (Input.GetKey(KeyCode.Escape))
+            //{
+            //    Application.Quit();
+            //}
         }
     }
 
