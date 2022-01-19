@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -12,10 +13,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] GameObject settingsPanel;
     [SerializeField] GameObject fpsCounter;
 
+    private bool toggle;
     private float timer;
     private float hudRefreshRate = 1f;
-
-    private bool cursorStatus = false;
 
     #region Singleton
     public static GameManager Instance;
@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+
             CursorMode();
             exitPanel.SetActive(!exitPanel.activeSelf);
             if (settingsPanel.activeSelf)
@@ -87,15 +88,20 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void CursorMode()
     {
-        if (cursorStatus)
+        toggle = !toggle;
+        if(SceneManager.GetActiveScene().name != "LobbyMax")
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            cursorStatus = false;
-        }
-        else if(!cursorStatus)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            cursorStatus = true;
+            if (toggle)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Debug.Log("Cursor lockstate: Unlocked");
+
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Debug.Log("Cursor lockstate: Locked");
+            }
         }
     }
 }
