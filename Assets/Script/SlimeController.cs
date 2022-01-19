@@ -31,7 +31,7 @@ public class SlimeController : MonoBehaviour
 
     private bool useFirstPersonCam = false;
 
-    public GameObject deathParticle;
+    public ParticleSystem deathParticle;
 
 
     private void Start()
@@ -78,6 +78,7 @@ public class SlimeController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Attack();
+                PlayAttackSound();
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -95,6 +96,11 @@ public class SlimeController : MonoBehaviour
             //    Cursor.lockState = CursorLockMode.None;
             //}
         }
+    }
+
+    void PlayAttackSound()
+    {
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     public void Movement()

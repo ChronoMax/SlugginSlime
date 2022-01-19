@@ -13,7 +13,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     [SerializeField]
     Text playerCountText;
-    int joinedplayers = 1, readyplayers, numberOfPlayers;
+    int joinedplayers = 1, readyplayers;
 
     [SerializeField]
     Text playerReadyText;
@@ -35,6 +35,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField]
     List<bool> playerSlot;
     int selectedSlot;
+
+    [SerializeField]
+    AudioSource startSound;
 
     //This region is responsible for how the text adapts to the amount of players in the game.
     //Also responsible for the ready/unready system.
@@ -82,6 +85,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [PunRPC]
     int AddReadyPlayers()
     {
+        gameObject.GetComponent<AudioSource>().Play();
         readyplayers++;
         photonView.RPC("UpdateText", RpcTarget.All);
         return readyplayers;
@@ -188,17 +192,25 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (startGame)
         {
+            startBtn.interactable = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
             PhotonNetwork.CurrentRoom.IsOpen = false;
             //print("Room is closed");
             //PhotonNetwork.AutomaticallySyncScene = true;
-            photonView.RPC("LoadLevel", RpcTarget.All);
+            photonView.RPC("PlayStartSound", RpcTarget.All);
         }
     }
 
     [PunRPC]
-    void LoadLevel()
+    void PlayStartSound()
     {
+        startSound.Play();
+        StartCoroutine(SlowLoadLevel());
+    }
+
+    IEnumerator SlowLoadLevel() 
+    {
+        yield return new WaitForSeconds(1);
         GameManager.Instance.RoomText.text = "";
         PhotonNetwork.LoadLevel(LevelToLoad);
     }
