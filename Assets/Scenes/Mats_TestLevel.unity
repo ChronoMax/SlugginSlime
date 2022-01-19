@@ -599,7 +599,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 100000
+  m_Intensity: 46.218945
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -640,7 +640,7 @@ Light:
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 2
-  m_AreaSize: {x: 1, y: 1}
+  m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 1
@@ -657,7 +657,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794105533}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: -0.9, y: 3, z: -0.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -683,7 +683,7 @@ MonoBehaviour:
   m_PointlightHDType: 0
   m_SpotLightShape: 0
   m_AreaLightShape: 0
-  m_Intensity: 100000
+  m_Intensity: 46.218945
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
@@ -1244,9 +1244,10 @@ MonoBehaviour:
   MovementSpeed: 10
   turnSpeed: 9
   slimeChunk: {fileID: 651031165683186534, guid: 83aa0548489f0dc47b9114901fc3b25a, type: 3}
-  launchForce: {x: 4, y: 2}
+  launchForce: {x: 10, y: 10}
   cameraOffset: {x: 0, y: 0, z: 0}
   HitBoxScaling: 1
+  cam: {fileID: 0}
   deathParticle: {fileID: 5712482879521359636, guid: eb039e2a67e2c424ca19b6baf3984454, type: 3}
 --- !u!54 &1844683914
 Rigidbody:
