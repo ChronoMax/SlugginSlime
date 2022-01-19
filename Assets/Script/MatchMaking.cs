@@ -18,6 +18,10 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     [SerializeField] Button joinButton;
     [SerializeField] Text textButton;
 
+    [Header("Canvasses")]
+    [SerializeField] GameObject mainCV;
+    [SerializeField] GameObject htpCV;
+
     private List<RoomInfo> roomList;
 
     private bool foundRoom = false;
@@ -152,5 +156,17 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     {
         roomList = p_list;
         base.OnRoomListUpdate(roomList);
+    }
+
+    public void HowToPlayPressed()
+    {
+        mainCV.SetActive(false);
+        htpCV.SetActive(true);
+    }
+
+    public void BackBtn()
+    {
+        htpCV.SetActive(false);
+        mainCV.SetActive(true);
     }
 }
