@@ -460,7 +460,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8217313041608234763}
-  m_LocalRotation: {x: -0, y: -0.71268237, z: -0, w: 0.701487}
+  m_LocalRotation: {x: 0, y: -0.7126813, z: 0, w: 0.70148796}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -489,7 +489,7 @@ MonoBehaviour:
   cameraOffset: {x: 0, y: 3, z: -5}
   HitBoxScaling: 1
   cam: {fileID: 0}
-  deathParticle: {fileID: 0}
+  deathParticle: {fileID: 5712482879521359636, guid: eb039e2a67e2c424ca19b6baf3984454, type: 3}
 --- !u!114 &9135740399379507807
 MonoBehaviour:
   m_ObjectHideFlags: 0
