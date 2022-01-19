@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
     {
         roomName = string.Format("Room ID: {0}", PhotonNetwork.CurrentRoom.Name);
         RoomText.text = roomName;
-        DontDestroyOnLoad(gameObject);
     }
     void Update()
     {
@@ -63,7 +62,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
             if (Time.unscaledTime > timer)
             {
                 int fps = (int)(1f / Time.unscaledDeltaTime);
-                fpsCounter.GetComponent<Text>().text = fps.ToString();
+                fpsCounter.GetComponent<Text>().text = "FPS: " + fps.ToString();
                 timer = Time.unscaledTime + hudRefreshRate;
             }
         }
@@ -98,9 +97,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
     {
         TextEditor textEditor = new TextEditor();
 
-        if(roomName != null)
+        if(PhotonNetwork.CurrentRoom.Name != null)
         {
-            textEditor.text = roomName;
+            textEditor.text = PhotonNetwork.CurrentRoom.Name;
             textEditor.SelectAll();
             textEditor.Copy(); //Copy room name to clipboard
 
