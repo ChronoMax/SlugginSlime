@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Realtime;
 using Photon.Pun;
+using UnityEngine.EventSystems;
 
 public class MatchMaking : MonoBehaviourPunCallbacks
 {
@@ -21,6 +22,11 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     [Header("Canvasses")]
     [SerializeField] GameObject mainCV;
     [SerializeField] GameObject htpCV;
+
+    [Header("InfoText")]
+    [SerializeField] GameObject playBtnHelpText;
+    [SerializeField] GameObject createBtnHelpText;
+    [SerializeField] GameObject roomIDBtnHelpText;
 
     private List<RoomInfo> roomList;
 
@@ -169,4 +175,36 @@ public class MatchMaking : MonoBehaviourPunCallbacks
         htpCV.SetActive(false);
         mainCV.SetActive(true);
     }
+
+    #region InfoText
+    public void OnPointerPlayEnter()
+    {
+        playBtnHelpText.SetActive(true);
+    }
+
+    public void OnPointerPlayExit()
+    {
+        playBtnHelpText.SetActive(false);
+    }
+
+    public void OnPointerCreateEnter()
+    {
+        createBtnHelpText.SetActive(true);
+    }
+
+    public void OnPointerCreateExit()
+    {
+        createBtnHelpText.SetActive(false);
+    }
+
+    public void OnPointerRoomEnter()
+    {
+        roomIDBtnHelpText.SetActive(true);
+    }
+
+    public void OnPointerRoomExit()
+    {
+        roomIDBtnHelpText.SetActive(false);
+    }
+    #endregion
 }
