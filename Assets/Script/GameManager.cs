@@ -5,14 +5,17 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-public class GameManager : MonoBehaviourPunCallbacks
+public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPointerExitHandler
 {
     public Text RoomText;
+    [SerializeField] GameObject toolTip;
     [SerializeField] GameObject exitPanel;
     [SerializeField] GameObject settingsPanel;
     [SerializeField] GameObject fpsCounter;
 
+    private string roomName;
     private bool toggle;
     private float timer;
     private float hudRefreshRate = 1f;
@@ -37,7 +40,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        RoomText.text = PhotonNetwork.CurrentRoom.Name;
+        roomName = string.Format("Room ID: {0}", PhotonNetwork.CurrentRoom.Name);
+        RoomText.text = roomName;
         DontDestroyOnLoad(gameObject);
     }
     void Update()
@@ -94,9 +98,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         TextEditor textEditor = new TextEditor();
 
-        if(PhotonNetwork.CurrentRoom.Name != null)
+        if(roomName != null)
         {
-            textEditor.text = PhotonNetwork.CurrentRoom.Name;
+            textEditor.text = roomName;
             textEditor.SelectAll();
             textEditor.Copy(); //Copy room name to clipboard
 
@@ -104,7 +108,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             yield return new WaitForSeconds(1f);
 
-            RoomText.text = PhotonNetwork.CurrentRoom.Name;
+            RoomText.text = roomName;
         }
 
         yield return null;
@@ -118,14 +122,29 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (toggle)
             {
                 Cursor.lockState = CursorLockMode.None;
-                Debug.Log("Cursor lockstate: Unlocked");
 
             }
             else
             {
                 Cursor.lockState = CursorLockMode.Locked;
-                Debug.Log("Cursor lockstate: Locked");
             }
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+
+        if(eventData.pointerEnter.name == "RoomName")
+        {
+            toolTip.SetActive(true);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if(eventData.pointerEnter.name == "RoomName")
+        {
+            toolTip.SetActive(false);
         }
     }
 }
