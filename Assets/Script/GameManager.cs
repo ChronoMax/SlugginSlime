@@ -86,6 +86,30 @@ public class GameManager : MonoBehaviourPunCallbacks
         CursorMode();
     }
 
+    public void CopyRoomID()
+    {
+        StartCoroutine(CopyToClipboard());
+    }
+    private IEnumerator CopyToClipboard()
+    {
+        TextEditor textEditor = new TextEditor();
+
+        if(PhotonNetwork.CurrentRoom.Name != null)
+        {
+            textEditor.text = PhotonNetwork.CurrentRoom.Name;
+            textEditor.SelectAll();
+            textEditor.Copy(); //Copy room name to clipboard
+
+            RoomText.text = "Copied";
+
+            yield return new WaitForSeconds(1f);
+
+            RoomText.text = PhotonNetwork.CurrentRoom.Name;
+        }
+
+        yield return null;
+    }
+
     public void CursorMode()
     {
         toggle = !toggle;
