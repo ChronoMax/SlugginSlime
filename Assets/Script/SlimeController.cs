@@ -171,7 +171,7 @@ public class SlimeController : MonoBehaviour
     //[PunRPC]
     private void LaunchSlime(float angle)
     {
-        Transform slimePiece = PhotonNetwork.Instantiate("slimeChunk", transform.position * 2.5f + (transform.up * transform.localScale.y), Quaternion.Euler(0, angle, 0)).transform;
+        Transform slimePiece = PhotonNetwork.Instantiate("slimeChunk", transform.position + (transform.up * transform.localScale.y * 1.5f), Quaternion.Euler(0, angle, 0)).transform;
 
         Rigidbody slimeRb = slimePiece.GetComponent<Rigidbody>();
         slimeRb.AddForce(((slimePiece.forward * launchForce.x) + (slimePiece.up * launchForce.y)), ForceMode.Impulse);
