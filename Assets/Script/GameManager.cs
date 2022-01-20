@@ -47,7 +47,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-
             CursorMode();
             exitPanel.SetActive(!exitPanel.activeSelf);
             if (settingsPanel.activeSelf)

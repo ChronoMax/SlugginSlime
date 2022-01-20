@@ -484,6 +484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathText: {fileID: 0}
+  playerAmountText: {fileID: 0}
   MovementSpeed: 10
   turnSpeed: 9
   slimeChunk: {fileID: 651031165683186534, guid: 83aa0548489f0dc47b9114901fc3b25a, type: 3}

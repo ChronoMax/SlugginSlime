@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class SlimeController : MonoBehaviour
 {
     public GameObject deathText;
+    public Text playerAmountText;
 
     public float MovementSpeed;
     public float turnSpeed;
@@ -53,6 +55,7 @@ public class SlimeController : MonoBehaviour
 
             deathText = GameObject.Find("Canvas/DeathText");
             deathText.SetActive(false);
+            playerAmountText = GameObject.Find("Canvas/PlayerAmountText").GetComponent<Text>();
         }
 
         //View.RPC("TeamSetup", RpcTarget.AllBuffered, new Vector3(Color.red.r, Color.red.b, Color.red.g));
@@ -71,6 +74,8 @@ public class SlimeController : MonoBehaviour
     {
         if (View.IsMine)
         {
+            playerAmountText.text = "Players left: " + PhotonNetwork.CurrentRoom.PlayerCount;
+
             Movement();
 
             CameraMovment();
