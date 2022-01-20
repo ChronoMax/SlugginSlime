@@ -42,6 +42,8 @@ public class MatchMaking : MonoBehaviourPunCallbacks
 
     public void Play()
     {
+        playButton.interactable = false;
+        joinButton.interactable = false;
         if (PhotonNetwork.IsConnected)
         {
             StartCoroutine(JoinRandomRoom());
@@ -50,6 +52,8 @@ public class MatchMaking : MonoBehaviourPunCallbacks
 
     public void SearchGame()
     {
+        playButton.interactable = false;
+        joinButton.interactable = false;
         if (PhotonNetwork.IsConnected)
         {
             StartCoroutine(CreateRandomRoom());

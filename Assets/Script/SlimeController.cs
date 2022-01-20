@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SlimeController : MonoBehaviour
 {
@@ -72,9 +73,17 @@ public class SlimeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool tempBool = false;
+
         if (View.IsMine)
         {
             playerAmountText.text = "Players left: " + PhotonNetwork.CurrentRoom.PlayerCount;
+
+            if ( !tempBool && PhotonNetwork.CurrentRoom.PlayerCount == 1)
+            {
+                tempBool = true;
+                SceneManager.LoadScene("ParticleTesting");
+            }
 
             Movement();
 
