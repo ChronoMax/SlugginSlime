@@ -171,4 +171,9 @@ public class MatchMaking : MonoBehaviourPunCallbacks
         htpCV.SetActive(false);
         mainCV.SetActive(true);
     }
+
+    public void ExitGameBtn()
+    {
+        Application.Quit();
+    }
 }
