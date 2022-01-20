@@ -165,6 +165,10 @@ public class SlimeController : MonoBehaviour
         else if (EnemyAttack)
         {
             View.RPC("Death", RpcTarget.AllBuffered);
+            if (View.IsMine)
+            {
+                StartCoroutine(LeaveLobby());
+            }
         }
     }
 
@@ -176,6 +180,12 @@ public class SlimeController : MonoBehaviour
         Rigidbody slimeRb = slimePiece.GetComponent<Rigidbody>();
         slimeRb.AddForce(((slimePiece.forward * launchForce.x) + (slimePiece.up * launchForce.y)), ForceMode.Impulse);
         slimeRb.AddTorque(launchForce, ForceMode.Impulse);
+    }
+
+    IEnumerator LeaveLobby()
+    {
+        yield return new WaitForSeconds(9);
+        PhotonNetwork.LeaveRoom();
     }
 
     [PunRPC]

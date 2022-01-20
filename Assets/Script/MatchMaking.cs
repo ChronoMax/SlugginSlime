@@ -27,6 +27,8 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     private bool foundRoom = false;
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+
         if (!PhotonNetwork.IsConnected)
         {
             debugText.text = "Connecting to servers...";
