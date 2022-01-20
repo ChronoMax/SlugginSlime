@@ -5,6 +5,8 @@ using Photon.Pun;
 
 public class SlimeController : MonoBehaviour
 {
+    public GameObject deathText;
+
     public float MovementSpeed;
     public float turnSpeed;
 
@@ -48,6 +50,9 @@ public class SlimeController : MonoBehaviour
             cam.position = cameraOffset;
             oldCamPosition = cam.localPosition;
             oldCamRotation = cam.localEulerAngles;
+
+            deathText = GameObject.Find("Canvas/DeathText");
+            deathText.SetActive(false);
         }
 
         //View.RPC("TeamSetup", RpcTarget.AllBuffered, new Vector3(Color.red.r, Color.red.b, Color.red.g));
@@ -167,6 +172,7 @@ public class SlimeController : MonoBehaviour
             View.RPC("Death", RpcTarget.AllBuffered);
             if (View.IsMine)
             {
+                deathText.SetActive(true);
                 StartCoroutine(LeaveLobby());
             }
         }
@@ -184,7 +190,7 @@ public class SlimeController : MonoBehaviour
 
     IEnumerator LeaveLobby()
     {
-        yield return new WaitForSeconds(9);
+        yield return new WaitForSeconds(5);
         PhotonNetwork.LeaveRoom();
     }
 
