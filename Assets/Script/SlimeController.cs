@@ -52,9 +52,8 @@ public class SlimeController : MonoBehaviour
 
         if (View.IsMine)
         {
-            //cam = Camera.current.transform;
             cam.parent = transform;
-            cam.position = cameraOffset;
+            cam.localPosition = cameraOffset;
             oldCamPosition = cam.localPosition;
             oldCamRotation = cam.localEulerAngles;
 
@@ -64,16 +63,14 @@ public class SlimeController : MonoBehaviour
             deathText.SetActive(false);
             playerAmountText = GameObject.Find("Canvas/PlayerAmountText").GetComponent<Text>();
         }
-
-        //View.RPC("TeamSetup", RpcTarget.AllBuffered, new Vector3(Color.red.r, Color.red.b, Color.red.g));
     }
 
-    [PunRPC]
-    public void TeamSetup(Vector3 color)
-    {
-        //tag = color.ToString();
-        GetComponent<Renderer>().material.color = new Color(color.x, color.y, color.z);
-    }
+    //[PunRPC]
+    //public void TeamSetup(Vector3 color)
+    //{
+    //    //tag = color.ToString();
+    //    GetComponent<Renderer>().material.color = new Color(color.x, color.y, color.z);
+    //}
 
 
     // Update is called once per frame
