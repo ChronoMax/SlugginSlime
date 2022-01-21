@@ -65,6 +65,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
                 timer = Time.unscaledTime + hudRefreshRate;
             }
         }
+
+        if (SceneManager.GetActiveScene().name != "LobbyMax")
+        {
+            toolTip.SetActive(false);
+            RoomText.text = "";
+        }
     }
 
     public override void OnLeftRoom()
