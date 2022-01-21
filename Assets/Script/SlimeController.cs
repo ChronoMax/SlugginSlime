@@ -42,6 +42,7 @@ public class SlimeController : MonoBehaviour
     private float attackTime = 0;
 
     private Image TimeBetweenAttackVisual;
+    private Text healthText;
 
     private void Start()
     {
@@ -58,6 +59,7 @@ public class SlimeController : MonoBehaviour
             oldCamRotation = cam.localEulerAngles;
 
             TimeBetweenAttackVisual = cam.GetChild(0).GetChild(0).GetComponent<Image>();
+            healthText = cam.GetChild(0).GetChild(1).GetComponent<Text>();
 
             deathText = GameObject.Find("Canvas/DeathText");
             deathText.SetActive(false);
@@ -177,6 +179,7 @@ public class SlimeController : MonoBehaviour
     {
         slime++;
         targetSize = slime * Vector3.one;
+        UpdateHealthText();
     }
 
     [PunRPC]
@@ -186,6 +189,7 @@ public class SlimeController : MonoBehaviour
         {
             slime--;
             targetSize = slime * Vector3.one;
+            UpdateHealthText();
             LaunchSlime(Random.Range(0, 360f));
         }
         else if (EnemyAttack)
@@ -193,6 +197,7 @@ public class SlimeController : MonoBehaviour
             View.RPC("Death", RpcTarget.AllBuffered);
             if (View.IsMine)
             {
+                UpdateHealthText();
                 deathText.SetActive(true);
                 StartCoroutine(LeaveLobby());
             }
@@ -291,6 +296,11 @@ public class SlimeController : MonoBehaviour
     {
         attackTime -= Time.deltaTime;
         TimeBetweenAttackVisual.fillAmount = (attackTime / timeBetweenAttack);
+    }
+
+    private void UpdateHealthText()
+    {
+        healthText.text = "health: " + slime.ToString();
     }
 
     public PhotonView GetPhotonView()
