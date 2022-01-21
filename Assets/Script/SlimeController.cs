@@ -300,7 +300,7 @@ public class SlimeController : MonoBehaviour
 
     private void UpdateHealthText()
     {
-        healthText.text = "health: " + slime.ToString();
+        healthText.text = "Health: " + slime.ToString();
     }
 
     public PhotonView GetPhotonView()
