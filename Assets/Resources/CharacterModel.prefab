@@ -493,6 +493,7 @@ MonoBehaviour:
   HitBoxScaling: 1
   cam: {fileID: 0}
   deathParticle: {fileID: 5712482879521359638, guid: eb039e2a67e2c424ca19b6baf3984454, type: 3}
+  timeBetweenAttack: 2
 --- !u!114 &9135740399379507807
 MonoBehaviour:
   m_ObjectHideFlags: 0

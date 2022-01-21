@@ -38,6 +38,11 @@ public class SlimeController : MonoBehaviour
 
     public ParticleSystem deathParticle;
 
+    public float timeBetweenAttack;
+    private float attackTime = 0;
+
+    private Image TimeBetweenAttackVisual;
+    private Text healthText;
 
     private void Start()
     {
@@ -48,26 +53,26 @@ public class SlimeController : MonoBehaviour
 
         if (View.IsMine)
         {
-            //cam = Camera.current.transform;
             cam.parent = transform;
-            cam.position = cameraOffset;
+            cam.localPosition = cameraOffset;
             oldCamPosition = cam.localPosition;
             oldCamRotation = cam.localEulerAngles;
+
+            TimeBetweenAttackVisual = cam.GetChild(0).GetChild(0).GetComponent<Image>();
+            healthText = cam.GetChild(0).GetChild(1).GetComponent<Text>();
 
             deathText = GameObject.Find("Canvas/DeathText");
             deathText.SetActive(false);
             playerAmountText = GameObject.Find("Canvas/PlayerAmountText").GetComponent<Text>();
         }
-
-        //View.RPC("TeamSetup", RpcTarget.AllBuffered, new Vector3(Color.red.r, Color.red.b, Color.red.g));
     }
 
-    [PunRPC]
-    public void TeamSetup(Vector3 color)
-    {
-        //tag = color.ToString();
-        GetComponent<Renderer>().material.color = new Color(color.x, color.y, color.z);
-    }
+    //[PunRPC]
+    //public void TeamSetup(Vector3 color)
+    //{
+    //    //tag = color.ToString();
+    //    GetComponent<Renderer>().material.color = new Color(color.x, color.y, color.z);
+    //}
 
 
     // Update is called once per frame
@@ -77,9 +82,14 @@ public class SlimeController : MonoBehaviour
 
         if (View.IsMine)
         {
+            if (attackTime > 0)
+            {
+                updateAttackTimerVisual();
+            }
+
             playerAmountText.text = "Players left: " + PhotonNetwork.CurrentRoom.PlayerCount;
 
-            if ( !tempBool && PhotonNetwork.CurrentRoom.PlayerCount == 1)
+            if (!tempBool && PhotonNetwork.CurrentRoom.PlayerCount == 1)
             {
                 tempBool = true;
                 SceneManager.LoadScene("ParticleTesting");
@@ -94,8 +104,10 @@ public class SlimeController : MonoBehaviour
                 View.RPC("DecreaseSize", RpcTarget.AllBuffered, false);
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0) && attackTime <= 0)
             {
+                attackTime = timeBetweenAttack;
+                TimeBetweenAttackVisual.fillAmount = 1;
                 Attack();
                 PlayAttackSound();
             }
@@ -165,11 +177,9 @@ public class SlimeController : MonoBehaviour
     [PunRPC]
     private void IncreaseSize()
     {
-        if (View.IsMine)
-        {
-            slime++;
-            targetSize = slime * Vector3.one;
-        }
+        slime++;
+        targetSize = slime * Vector3.one;
+        UpdateHealthText();
     }
 
     [PunRPC]
@@ -179,6 +189,7 @@ public class SlimeController : MonoBehaviour
         {
             slime--;
             targetSize = slime * Vector3.one;
+            UpdateHealthText();
             LaunchSlime(Random.Range(0, 360f));
         }
         else if (EnemyAttack)
@@ -186,20 +197,23 @@ public class SlimeController : MonoBehaviour
             View.RPC("Death", RpcTarget.AllBuffered);
             if (View.IsMine)
             {
+                UpdateHealthText();
                 deathText.SetActive(true);
                 StartCoroutine(LeaveLobby());
             }
         }
     }
 
-    //[PunRPC]
     private void LaunchSlime(float angle)
     {
-        Transform slimePiece = PhotonNetwork.Instantiate("slimeChunk", transform.position + (transform.up * transform.localScale.y * 1.5f), Quaternion.Euler(0, angle, 0)).transform;
+        if (View.IsMine)
+        {
+            Transform slimePiece = PhotonNetwork.Instantiate("slimeChunk", transform.position + (transform.up * transform.localScale.y * 1.5f), Quaternion.Euler(0, angle, 0)).transform;
 
-        Rigidbody slimeRb = slimePiece.GetComponent<Rigidbody>();
-        slimeRb.AddForce(((slimePiece.forward * launchForce.x) + (slimePiece.up * launchForce.y)), ForceMode.Impulse);
-        slimeRb.AddTorque(launchForce, ForceMode.Impulse);
+            Rigidbody slimeRb = slimePiece.GetComponent<Rigidbody>();
+            slimeRb.AddForce(((slimePiece.forward * launchForce.x) + (slimePiece.up * launchForce.y)), ForceMode.Impulse);
+            slimeRb.AddTorque(launchForce, ForceMode.Impulse);
+        }
     }
 
     IEnumerator LeaveLobby()
@@ -213,7 +227,7 @@ public class SlimeController : MonoBehaviour
     {
         MovementSpeed = 0;
         turnSpeed = 0;
-        targetSize = Vector3.zero * 0.1f;
+        targetSize = Vector3.zero * 0.3f;
         Destroy(gameObject, 10);
     }
 
@@ -222,11 +236,9 @@ public class SlimeController : MonoBehaviour
         TargetDummyBehaviour dummy;
         SlimeController slimeScript;
 
-        Collider[] hitCol = Physics.OverlapSphere(transform.position + (transform.forward * targetSize.z), targetSize.z / 2);
+        Collider[] hitCol = Physics.OverlapSphere(transform.position + (transform.forward * targetSize.z) + (transform.up * 0.35f * targetSize.y), targetSize.z / 2);
         foreach (Collider col in hitCol)
         {
-            //if (col.TryGetComponent(out photonviewer) && !photonviewer.IsMine)
-            //{
             if (col.gameObject != gameObject)
             {
                 if (col.TryGetComponent(out dummy))
@@ -235,7 +247,7 @@ public class SlimeController : MonoBehaviour
                 }
                 else if (col.TryGetComponent(out slimeScript))
                 {
-                    slimeScript.GetPhotonView().RPC("DecreaseSize", RpcTarget.AllBuffered, true);
+                    slimeScript.GetPhotonView().RPC("DecreaseSize", RpcTarget.All, true);
                 }
             }
         }
@@ -246,14 +258,6 @@ public class SlimeController : MonoBehaviour
         if (collision.collider.CompareTag("slimeChunk"))
         {
             View.RPC("IncreaseSize", RpcTarget.AllBuffered);
-
-            //collision.gameObject.GetComponent<PhotonView>().TransferOwnership(View.Owner);
-
-            //collision.gameObject.SetActive(false);
-
-            //Debug.Log(collision.gameObject.GetComponent<PhotonView>().Owner);
-
-            //PhotonNetwork.Destroy(collision.gameObject);
 
             View.RPC("DeleteSlimeChunk", RpcTarget.All, collision.gameObject.GetComponent<PhotonView>().ViewID);
         }
@@ -274,7 +278,7 @@ public class SlimeController : MonoBehaviour
         if (View.IsMine)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position + (transform.forward * targetSize.z), targetSize.z / 2 * HitBoxScaling);
+            Gizmos.DrawWireSphere(transform.position + (transform.forward * targetSize.z) + (transform.up * 0.35f * targetSize.y), targetSize.z / 2 * HitBoxScaling);
         }
     }
 
@@ -286,6 +290,17 @@ public class SlimeController : MonoBehaviour
             cam.localEulerAngles = Vector3.Lerp(cam.localEulerAngles, targetCamRotation, Time.deltaTime * 10);
             yield return new WaitForSeconds(0.000001f);
         }
+    }
+
+    private void updateAttackTimerVisual()
+    {
+        attackTime -= Time.deltaTime;
+        TimeBetweenAttackVisual.fillAmount = (attackTime / timeBetweenAttack);
+    }
+
+    private void UpdateHealthText()
+    {
+        healthText.text = "Health: " + slime.ToString();
     }
 
     public PhotonView GetPhotonView()
