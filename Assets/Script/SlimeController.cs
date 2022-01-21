@@ -263,6 +263,23 @@ public class SlimeController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "DeathColl")
+        {
+            if (View.IsMine)
+            {
+                View.RPC("Death", RpcTarget.AllBuffered);
+                ForcedDeath();
+            }
+        }
+    }
+    void ForcedDeath()
+    {
+        deathText.SetActive(true);
+        StartCoroutine(LeaveLobby());
+    }
+
     [PunRPC]
     private void DeleteSlimeChunk(int id)
     {
