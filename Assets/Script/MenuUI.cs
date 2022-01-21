@@ -25,6 +25,9 @@ public class MenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         case "InputField":
             test.text = "Fill this textbox with the room ID that you want to join. \n The create button automatically change to join if the ID is correct.";//Inputfield id help text
             break;
+            default:
+                test.text = "";
+                break;
         }
     }
 
