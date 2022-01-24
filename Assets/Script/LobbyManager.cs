@@ -84,12 +84,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (!ready)
         {
             photonView.RPC("AddReadyPlayers", RpcTarget.AllBuffered);
+            GameManager.Instance.nameInputField.interactable = false;
             readyBttnText.text = "Unready";
             ready = true;
         }
         else if (ready)
         {
             photonView.RPC("RemoveReadyPlayers", RpcTarget.AllBuffered);
+            GameManager.Instance.nameInputField.interactable = true;
             readyBttnText.text = "Ready";
             ready = false;
         }

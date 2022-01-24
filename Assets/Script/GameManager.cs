@@ -15,8 +15,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
     [SerializeField] GameObject settingsPanel;
     [SerializeField] GameObject fpsCounter;
 
-    [SerializeField]
-    InputField nameInputField;
+    public InputField nameInputField;
 
     private string roomName;
     private bool toggle;
