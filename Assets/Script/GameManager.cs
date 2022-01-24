@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
     [SerializeField] GameObject settingsPanel;
     [SerializeField] GameObject fpsCounter;
 
+    public InputField nameInputField;
+
     private string roomName;
     private bool toggle;
     private float timer;
@@ -42,6 +44,16 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
     {
         roomName = string.Format("Room ID: {0}", PhotonNetwork.CurrentRoom.Name);
         RoomText.text = roomName;
+
+        if (!PlayerPrefs.HasKey("PlayerName"))
+        {
+            return;
+        }
+        else
+        {
+            string PlayerName = PlayerPrefs.GetString("PlayerName");
+            nameInputField.text = PlayerName;
+        }
     }
     void Update()
     {
@@ -150,5 +162,17 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
         {
             toolTip.SetActive(false);
         }
+    }
+
+    public void PlacePLayerName()
+    {
+        string playerNickname = nameInputField.text;
+        PhotonNetwork.NickName = playerNickname;
+        PlayerPrefs.SetString("PlayerName", playerNickname);
+    }
+
+    public InputField GetInput()
+    {
+        return nameInputField;
     }
 }
