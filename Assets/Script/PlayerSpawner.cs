@@ -26,5 +26,6 @@ public class PlayerSpawner : MonoBehaviour
     {
         SlimeController slimeScript = PhotonNetwork.Instantiate("CharacterModel", Vector3.up + spawnPoints[index].position, Quaternion.identity).GetComponent<SlimeController>();
         slimeScript.cam = Camera.main.transform;
+        GameManager.Instance.PlacePLayerName();
     }
 }

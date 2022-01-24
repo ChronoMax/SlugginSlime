@@ -4,7 +4,6 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using Photon.Realtime;
-using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -32,12 +31,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     [SerializeField]
     List<Transform> spawnpoints;
+
     [SerializeField]
     List<bool> playerSlot;
     int selectedSlot;
 
     [SerializeField]
     AudioSource startSound;
+
+    [SerializeField]
+    Button readyBtn;
 
     //This region is responsible for how the text adapts to the amount of players in the game.
     //Also responsible for the ready/unready system.
@@ -54,6 +57,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         StartCoroutine(SpawnPlayerInTube());
     }
 
+    private void Update()
+    {
+        if(GameManager.Instance.GetInput().text.Length > 0)
+        {
+            readyBtn.interactable = true;
+        }
+        else
+        {
+            readyBtn.interactable = false;
+        }
+    }
     //When a player leaves the room
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {

@@ -20,6 +20,8 @@ public class SlimeController : MonoBehaviour
 
     public float HitBoxScaling = 1;
 
+    public Text playerNameText;
+
     private int slime = 1;
 
     private Vector3 targetSize = Vector3.one;
@@ -50,9 +52,17 @@ public class SlimeController : MonoBehaviour
 
         //Cursor.lockState = CursorLockMode.Locked;
         GameManager.Instance.CursorMode();
-
+        if (!View.IsMine)
+        {
+            playerNameText.text = View.Owner.NickName;
+        }
+        else
+        {
+            playerNameText.text = "";
+        }
         if (View.IsMine)
         {
+
             cam.parent = transform;
             cam.localPosition = cameraOffset;
             oldCamPosition = cam.localPosition;
