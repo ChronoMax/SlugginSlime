@@ -28,6 +28,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
 
     private List<RoomInfo> roomList;
     string onlineScene;
+    string sceneToLoad;
     int maxPlayerCount;
 
     ExitGames.Client.Photon.Hashtable table;
@@ -87,8 +88,6 @@ public class MatchMaking : MonoBehaviourPunCallbacks
         {
             textButton.text = "Create";
         }
-
-        PhotonNetwork.JoinLobby();
     }
     IEnumerator JoinRandomRoom()
     {
@@ -138,10 +137,11 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     {
         if (roomList != null)
         {
-            foreach (RoomInfo room in roomList)
+            for (int i = 0; i < roomList.Count; i++)
             {
-                if (room.Name == roomName.text)
+                if(roomList[i].Name == roomName.text)
                 {
+                    sceneToLoad = roomList[i].CustomProperties["scene"].ToString();
                     return true;
                 }
             }
@@ -153,6 +153,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         debugText.text = "Joining...";
+        onlineScene = sceneToLoad;
         PhotonNetwork.LoadLevel(onlineScene);
     }
 
@@ -165,6 +166,8 @@ public class MatchMaking : MonoBehaviourPunCallbacks
             $"{PhotonNetwork.GetPing()}";
         playButton.interactable = true;
         joinButton.interactable = true;
+
+        PhotonNetwork.JoinLobby();
     }
 
     //Called when the player has succesfully created a room
@@ -211,18 +214,24 @@ public class MatchMaking : MonoBehaviourPunCallbacks
 
         maxPlayerCount = 4;
         onlineScene = "LobbyMax_4";
-        table = new ExitGames.Client.Photon.Hashtable() { { "mode", 4 } };
+
+        table = new ExitGames.Client.Photon.Hashtable();
+        table.Add("mode" , maxPlayerCount);
+        table.Add("scene", onlineScene);
         m_roomOptions.CustomRoomProperties = table;
-        m_roomOptions.CustomRoomPropertiesForLobby = new string[] { "mode" };
+        m_roomOptions.CustomRoomPropertiesForLobby = new string[] { "mode", "scene" };
         m_roomOptions.MaxPlayers = (byte)4;
 
         if(modeDropdown.value == 1)
         {
             maxPlayerCount = 20;
             onlineScene = "LobbyMax_20";
-            table = new ExitGames.Client.Photon.Hashtable() { { "mode", 20 } };
+
+            table = new ExitGames.Client.Photon.Hashtable();
+            table.Add("mode" , maxPlayerCount);
+            table.Add("scene", onlineScene);
             m_roomOptions.CustomRoomProperties = table;
-            m_roomOptions.CustomRoomPropertiesForLobby = new string[] { "mode" };
+            m_roomOptions.CustomRoomPropertiesForLobby = new string[] { "mode", "scene" };
             m_roomOptions.MaxPlayers = (byte)20;
         }
     }
