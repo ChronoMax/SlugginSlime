@@ -1272,7 +1272,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -383}
+  m_AnchoredPosition: {x: 383, y: 445.04}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &304750608
@@ -4291,7 +4291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aefae2aff179071419f430233089ef4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlineScene: LobbyMax
   debugText: {fileID: 1477378945}
   roomName: {fileID: 818401458}
   playButton: {fileID: 902148660}
