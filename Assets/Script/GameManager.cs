@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
 
     void Start()
     {
+        nameInputField.characterLimit = 10;
+
         roomName = string.Format("Room ID: {0}", PhotonNetwork.CurrentRoom.Name);
         RoomText.text = roomName;
 
