@@ -120,7 +120,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
         else
         {
             debugText.text = "Searching for a random game..";
-            PhotonNetwork.CreateRoom(randomRoom, m_roomOptions, null);
+            PhotonNetwork.CreateRoom(randomRoom, m_roomOptions);
         }
     }
 
@@ -196,26 +196,25 @@ public class MatchMaking : MonoBehaviourPunCallbacks
 
     public void SwitchGamemode()
     {
-        switch (modeDropdown.value)
+        m_roomOptions = new RoomOptions();
+        m_roomOptions.IsOpen = true;
+        m_roomOptions.IsVisible = true;
+
+        maxPlayerCount = 4;
+        onlineScene = "LobbyMax_4";
+        table = new ExitGames.Client.Photon.Hashtable() { { "mode", 4 } };
+        m_roomOptions.CustomRoomProperties = table;
+        m_roomOptions.CustomRoomPropertiesForLobby = new string[] { "mode" };
+        m_roomOptions.MaxPlayers = (byte)4;
+
+        if(modeDropdown.value == 1)
         {
-            case 0:
-                maxPlayerCount = 4;
-                onlineScene = "LobbyMax_4";
-                table = new ExitGames.Client.Photon.Hashtable() { { "mode" , 4 } };
-                m_roomOptions.CustomRoomPropertiesForLobby = new string[] { "mode" };
-                break;
-            case 1:
-                maxPlayerCount = 20;
-                onlineScene = "LobbyMax_20";
-                table = new ExitGames.Client.Photon.Hashtable() { { "mode", 20 } };
-                m_roomOptions.CustomRoomPropertiesForLobby = new string[] { "mode" };
-                break;
-            default:
-                maxPlayerCount = 4;
-                onlineScene = "LobbyMax_4";
-                table = new ExitGames.Client.Photon.Hashtable() { { "mode", 4 } };
-                m_roomOptions.CustomRoomPropertiesForLobby = new string[] { "mode"};
-                break;
+            maxPlayerCount = 20;
+            onlineScene = "LobbyMax_20";
+            table = new ExitGames.Client.Photon.Hashtable() { { "mode", 20 } };
+            m_roomOptions.CustomRoomProperties = table;
+            m_roomOptions.CustomRoomPropertiesForLobby = new string[] { "mode" };
+            m_roomOptions.MaxPlayers = (byte)20;
         }
     }
 }
