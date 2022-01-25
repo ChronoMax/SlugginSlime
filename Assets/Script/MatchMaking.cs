@@ -79,8 +79,6 @@ public class MatchMaking : MonoBehaviourPunCallbacks
         {
             textButton.text = "Create";
         }
-
-        PhotonNetwork.JoinLobby();
     }
     IEnumerator JoinRandomRoom()
     {
@@ -144,6 +142,8 @@ public class MatchMaking : MonoBehaviourPunCallbacks
             $"{PhotonNetwork.GetPing()}";
         playButton.interactable = true;
         joinButton.interactable = true;
+
+        PhotonNetwork.JoinLobby();
     }
 
     //Called when the player has succesfully created a room
