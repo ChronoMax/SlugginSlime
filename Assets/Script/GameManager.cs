@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
         RoomText.text = roomName;
 
         Debug.Log(PhotonNetwork.CurrentRoom.MaxPlayers);
+        Debug.Log(PhotonNetwork.CurrentRoom.IsOpen);
         if (!PlayerPrefs.HasKey("PlayerName"))
         {
             return;
