@@ -114,20 +114,21 @@ public class SlimeController : MonoBehaviour
                 View.RPC("DecreaseSize", RpcTarget.AllBuffered, false);
             }
 
-            if (!GameManager.Instance.GetSettingsPanel().activeSelf)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && attackTime <= 0 && !GameManager.Instance.GetSettingsPanel())
             {
-                cam.GetChild(0).GetChild(0).gameObject.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.Mouse0) && attackTime <= 0)
-                {
-                    attackTime = timeBetweenAttack;
-                    TimeBetweenAttackVisual.fillAmount = 1;
-                    Attack();
-                    PlayAttackSound();
-                }
+                attackTime = timeBetweenAttack;
+                TimeBetweenAttackVisual.fillAmount = 1;
+                Attack();
+                PlayAttackSound();
+            }
+
+            if (GameManager.Instance.GetSettingsPanel())
+            {
+                cam.GetChild(0).GetChild(0).gameObject.SetActive(false);
             }
             else
             {
-                cam.GetChild(0).GetChild(0).gameObject.SetActive(false);
+                cam.GetChild(0).GetChild(0).gameObject.SetActive(true);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))

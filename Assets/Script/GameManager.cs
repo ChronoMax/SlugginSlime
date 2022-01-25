@@ -176,8 +176,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
         return nameInputField;
     }
 
-    public GameObject GetSettingsPanel()
+    public bool GetSettingsPanel()
     {
-        return exitPanel;
+        if(exitPanel.activeSelf || settingsPanel.activeSelf)
+        {
+            return true;
+        }
+        return false;
     }
 }
