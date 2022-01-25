@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
             }
         }
 
-        if (SceneManager.GetActiveScene().name != "LobbyMax")
+        if (SceneManager.GetActiveScene().name != "LobbyMax_4" || SceneManager.GetActiveScene().name != "LobbyMax_20")
         {
             toolTip.SetActive(false);
             RoomText.text = "";
