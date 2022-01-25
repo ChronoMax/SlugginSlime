@@ -9,7 +9,6 @@ using Photon.Pun.UtilityScripts;
 public class MatchMaking : MonoBehaviourPunCallbacks
 {
     [Header("UI")]
-    [SerializeField] string onlineScene;
     [SerializeField] Text debugText;
     [SerializeField] InputField roomName;
 
@@ -19,12 +18,16 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     [SerializeField] Button joinButton;
     [SerializeField] Text textButton;
 
-        [Header("Canvasses")]
+    [Header("Dropdown")]
+    [SerializeField] Dropdown modeDropdown;
+
+    [Header("Canvasses")]
     [SerializeField] GameObject mainCV;
     [SerializeField] GameObject htpCV;
 
-    private List<RoomInfo> roomList;
 
+    private List<RoomInfo> roomList;
+    string onlineScene;
     private bool foundRoom = false;
     void Start()
     {
@@ -93,12 +96,28 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSecondsRealtime(3);
         string randomRoom = Random.Range(1, 100000).ToString();
+        int maxPlayerCount;
+        switch (modeDropdown.value)
+        {
+            case 0:
+                maxPlayerCount = 4;
+                onlineScene = "LobbyMax_4";
+                break;
+            case 1:
+                maxPlayerCount = 20;
+                onlineScene = "LobbyMax_20";
+                break;
+            default:
+                maxPlayerCount = 4;
+                onlineScene = "LobbyMax_4";
+                break;
+        }
 
         RoomOptions roomOpsSpecial = new RoomOptions()
         {
             IsVisible = true, // Private game?
             IsOpen = true, // Joinable?
-            MaxPlayers = (byte)4, // RoomSize in Bytes
+            MaxPlayers = (byte)maxPlayerCount, // RoomSize in Bytes
         };
 
         if (roomName.text.Length == 5 && foundRoom == true)
