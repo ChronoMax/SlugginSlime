@@ -153,7 +153,11 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         debugText.text = "Joining...";
-        onlineScene = sceneToLoad;
+
+        if(sceneToLoad!= null)
+        {
+            onlineScene = sceneToLoad;
+        }
         PhotonNetwork.LoadLevel(onlineScene);
     }
 
