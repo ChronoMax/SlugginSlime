@@ -101,7 +101,6 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     IEnumerator CreateRandomRoom()
     {
         yield return new WaitForSecondsRealtime(3);
-        string randomRoom = Random.Range(1, 100000).ToString();
 
         SwitchGamemode();
 
@@ -120,8 +119,19 @@ public class MatchMaking : MonoBehaviourPunCallbacks
         else
         {
             debugText.text = "Searching for a random game..";
-            PhotonNetwork.CreateRoom(randomRoom, m_roomOptions);
+            PhotonNetwork.CreateRoom(GetRandom5digit(), m_roomOptions);
         }
+    }
+
+    string GetRandom5digit()
+    {
+        string num = "";
+        for (int i = 0; i < 5; i++)
+        {
+            num += Random.Range(1, 9).ToString();
+        }
+
+        return num;
     }
 
     private bool CheckRoom()
@@ -143,7 +153,6 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         debugText.text = "Joining...";
-        Debug.Log("Trying to load scene: " + onlineScene);
         PhotonNetwork.LoadLevel(onlineScene);
     }
 

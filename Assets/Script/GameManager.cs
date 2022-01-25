@@ -45,8 +45,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
         roomName = string.Format("Room ID: {0}", PhotonNetwork.CurrentRoom.Name);
         RoomText.text = roomName;
 
-        Debug.Log(PhotonNetwork.CurrentRoom.MaxPlayers);
-        Debug.Log(PhotonNetwork.CurrentRoom.IsOpen);
         if (!PlayerPrefs.HasKey("PlayerName"))
         {
             return;
@@ -80,7 +78,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
             }
         }
 
-        if (SceneManager.GetActiveScene().name != "LobbyMax_4" || SceneManager.GetActiveScene().name != "LobbyMax_20")
+        if (SceneManager.GetActiveScene().name != "LobbyMax_4" && SceneManager.GetActiveScene().name != "LobbyMax_20")
         {
             toolTip.SetActive(false);
             RoomText.text = "";
