@@ -59,7 +59,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if(GameManager.Instance.GetInput().text.Length > 0)
+        if(GameManager.Instance.GetInput().text.Length > 0 && !GameManager.Instance.GetInput().text.Contains(" "))
         {
             readyBtn.interactable = true;
         }
