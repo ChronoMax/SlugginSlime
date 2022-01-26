@@ -46,6 +46,9 @@ public class SlimeController : MonoBehaviour
     private Image TimeBetweenAttackVisual;
     private Text healthText;
 
+    public Renderer rend;
+    public Material ogMat;
+
     private void Start()
     {
         View = GetComponent<PhotonView>();
@@ -62,7 +65,6 @@ public class SlimeController : MonoBehaviour
         }
         if (View.IsMine)
         {
-
             cam.parent = transform;
             cam.localPosition = cameraOffset;
             oldCamPosition = cam.localPosition;
@@ -74,16 +76,17 @@ public class SlimeController : MonoBehaviour
             deathText = GameObject.Find("Canvas/DeathText");
             deathText.SetActive(false);
             playerAmountText = GameObject.Find("Canvas/PlayerAmountText").GetComponent<Text>();
+
+            Vector3 newColor = new Vector3
+            (
+                Random.Range(0f, 1f),
+                Random.Range(0f, 1f),
+                Random.Range(0f, 1f)
+            );
+
+            View.RPC("ChangeColor", RpcTarget.All, newColor);
         }
     }
-
-    //[PunRPC]
-    //public void TeamSetup(Vector3 color)
-    //{
-    //    //tag = color.ToString();
-    //    GetComponent<Renderer>().material.color = new Color(color.x, color.y, color.z);
-    //}
-
 
     // Update is called once per frame
     void Update()
@@ -342,5 +345,20 @@ public class SlimeController : MonoBehaviour
     public PhotonView GetPhotonView()
     {
         return View;
+    }
+
+    [PunRPC]
+    void ChangeColor(Vector3 newColor)
+    {
+        Color tempColor = new Color(newColor.x, newColor.y, newColor.z);
+        //GetComponent<Renderer>().material.color = tempColor;
+
+        List<Material> m = new List<Material>();
+        rend.GetMaterials(m);
+
+        foreach (Material mat in m)
+        {
+            ogMat.color = tempColor;
+        }
     }
 }
