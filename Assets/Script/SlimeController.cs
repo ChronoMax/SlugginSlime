@@ -359,10 +359,13 @@ public class SlimeController : MonoBehaviour
         List<Material> m = new List<Material>();
         rend.GetMaterials(m);
 
-        foreach (Material mat in m)
+        for (int i = 0; i < m.Count; i++)
         {
-            mat.color = tempColor;
-            mat.SetColor("_EmissionColor", tempColor);
+            m[i].color = tempColor;
+            m[i].SetColor("_EmissionColor", tempColor);
+            m[i].EnableKeyword("_EMISSION");
         }
+
+        m[2].color = Color.black;
     }
 }

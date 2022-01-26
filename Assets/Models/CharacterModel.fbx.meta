@@ -3,7 +3,22 @@ guid: f3912c5e392b8e540b701c00b0a3adde
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Slime_Shader
+    second: {fileID: 2100000, guid: 13b4f35e305a63a4698af89ee360b872, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Slime_Shader1
+    second: {fileID: 2100000, guid: 3234b2a83b47ec048a90d15c8b927871, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Slime_Shader2
+    second: {fileID: 2100000, guid: 3cbe33319bb71124e8db0e4d59b54dbe, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
