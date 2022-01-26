@@ -49,7 +49,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         CheckForMasterClient();
         photonView = PhotonView.Get(this);
-        playerCountText.text = joinedplayers + "/4 players joined";
+        playerCountText.text = $"{joinedplayers}/{PhotonNetwork.CurrentRoom.MaxPlayers} playersjoined";
         playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
         photonView.RPC("UpdateText", RpcTarget.All);
         StartCoroutine(SelectedSlot());

@@ -8536,7 +8536,7 @@ MonoBehaviour:
   - {fileID: 356693992}
   - {fileID: 963451252}
   - {fileID: 1101480114}
-  playerSlot: 00000000
+  playerSlot: 0000000000000000000000000000000000000000
   startSound: {fileID: 1008005164}
   readyBtn: {fileID: 1321983747}
 --- !u!4 &1558423571
