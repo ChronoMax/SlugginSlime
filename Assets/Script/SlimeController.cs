@@ -362,6 +362,7 @@ public class SlimeController : MonoBehaviour
         foreach (Material mat in m)
         {
             mat.color = tempColor;
+            mat.SetColor("_EmissionColor", tempColor);
         }
     }
 }
