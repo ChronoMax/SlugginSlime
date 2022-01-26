@@ -166,7 +166,6 @@ public class SlimeController : MonoBehaviour
         {
             transform.Translate(velocity * Time.deltaTime);
             anim.SetFloat("Speed", velocity.magnitude);
-            Debug.Log(velocity.magnitude);
         }
     }
 
