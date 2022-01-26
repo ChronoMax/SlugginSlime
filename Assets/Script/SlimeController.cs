@@ -46,8 +46,11 @@ public class SlimeController : MonoBehaviour
     private Image TimeBetweenAttackVisual;
     private Text healthText;
 
+    private Animator anim;
+
     private void Start()
     {
+        anim = GetComponent<Animator>();
         View = GetComponent<PhotonView>();
 
         //Cursor.lockState = CursorLockMode.Locked;
@@ -120,6 +123,7 @@ public class SlimeController : MonoBehaviour
                 TimeBetweenAttackVisual.fillAmount = 1;
                 Attack();
                 PlayAttackSound();
+                anim.SetTrigger("Attack");
             }
 
             if (GameManager.Instance.GetSettingsPanel())
@@ -156,10 +160,12 @@ public class SlimeController : MonoBehaviour
     public void Movement()
     {
         Vector3 moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
+        var velocity = moveVector * MovementSpeed / (float)slime;
         if (moveVector != Vector3.zero)
         {
-            transform.Translate(moveVector * MovementSpeed / (float)slime * Time.deltaTime);
+            transform.Translate(velocity * Time.deltaTime);
+            anim.SetFloat("Speed", velocity.magnitude);
+            Debug.Log(velocity.magnitude);
         }
     }
 
