@@ -690,8 +690,8 @@ MonoBehaviour:
   cam: {fileID: 0}
   deathParticle: {fileID: 5712482879521359638, guid: eb039e2a67e2c424ca19b6baf3984454, type: 3}
   timeBetweenAttack: 2
-  rend: {fileID: 4184839171404170699}
   ogMat: {fileID: 1518724390335360132, guid: f3912c5e392b8e540b701c00b0a3adde, type: 3}
+  rend: {fileID: 4184839171404170699}
 --- !u!114 &9135740399379507807
 MonoBehaviour:
   m_ObjectHideFlags: 0
