@@ -362,7 +362,7 @@ public class SlimeController : MonoBehaviour
 
         foreach (Material mat in m)
         {
-            ogMat.color = tempColor;
+            mat.color = tempColor;
         }
     }
 }
