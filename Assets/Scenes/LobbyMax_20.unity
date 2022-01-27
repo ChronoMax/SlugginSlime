@@ -8509,7 +8509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3475e1784bfe7954e903f2c0b373e21a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelToLoad: TestLevel
+  LevelToLoad: TestLevel20
   playerCountText: {fileID: 1743644045}
   playerReadyText: {fileID: 1786329828}
   readyBttnText: {fileID: 656972218}
