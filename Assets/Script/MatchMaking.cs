@@ -63,6 +63,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
 
     public void SearchGame()
     {
+        modeDropdown.interactable = false;
         playButton.interactable = false;
         joinButton.interactable = false;
         if (PhotonNetwork.IsConnected)
