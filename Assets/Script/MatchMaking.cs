@@ -52,6 +52,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
 
     public void Play()//Play btn
     {
+        modeDropdown.interactable = false;
         playButton.interactable = false;
         joinButton.interactable = false;
         if (PhotonNetwork.IsConnected)
