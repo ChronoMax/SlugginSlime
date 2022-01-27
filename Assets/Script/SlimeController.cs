@@ -46,8 +46,12 @@ public class SlimeController : MonoBehaviour
     private Image TimeBetweenAttackVisual;
     private Text healthText;
 
+    public Material ogMat;
+    public Renderer rend;
+    private Animator anim;
     private void Start()
     {
+        anim = GetComponent<Animator>();
         View = GetComponent<PhotonView>();
 
         //Cursor.lockState = CursorLockMode.Locked;
@@ -62,7 +66,6 @@ public class SlimeController : MonoBehaviour
         }
         if (View.IsMine)
         {
-
             cam.parent = transform;
             cam.localPosition = cameraOffset;
             oldCamPosition = cam.localPosition;
@@ -74,16 +77,17 @@ public class SlimeController : MonoBehaviour
             deathText = GameObject.Find("Canvas/DeathText");
             deathText.SetActive(false);
             playerAmountText = GameObject.Find("Canvas/PlayerAmountText").GetComponent<Text>();
+
+            Vector3 newColor = new Vector3
+            (
+                Random.Range(0f, 1f),
+                Random.Range(0f, 1f),
+                Random.Range(0f, 1f)
+            );
+
+            View.RPC("ChangeColor", RpcTarget.All, newColor);
         }
     }
-
-    //[PunRPC]
-    //public void TeamSetup(Vector3 color)
-    //{
-    //    //tag = color.ToString();
-    //    GetComponent<Renderer>().material.color = new Color(color.x, color.y, color.z);
-    //}
-
 
     // Update is called once per frame
     void Update()
@@ -114,12 +118,22 @@ public class SlimeController : MonoBehaviour
                 View.RPC("DecreaseSize", RpcTarget.AllBuffered, false);
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && attackTime <= 0)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && attackTime <= 0 && !GameManager.Instance.GetSettingsPanel())
             {
                 attackTime = timeBetweenAttack;
                 TimeBetweenAttackVisual.fillAmount = 1;
                 Attack();
                 PlayAttackSound();
+                anim.SetTrigger("Attack");
+            }
+
+            if (GameManager.Instance.GetSettingsPanel())
+            {
+                cam.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            }
+            else
+            {
+                cam.GetChild(0).GetChild(0).gameObject.SetActive(true);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -147,10 +161,11 @@ public class SlimeController : MonoBehaviour
     public void Movement()
     {
         Vector3 moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
+        var velocity = moveVector * MovementSpeed / (float)slime;
         if (moveVector != Vector3.zero)
         {
-            transform.Translate(moveVector * MovementSpeed / (float)slime * Time.deltaTime);
+            transform.Translate(velocity * Time.deltaTime);
+            anim.SetFloat("Speed", velocity.magnitude);
         }
     }
 
@@ -333,5 +348,24 @@ public class SlimeController : MonoBehaviour
     public PhotonView GetPhotonView()
     {
         return View;
+    }
+
+    [PunRPC]
+    void ChangeColor(Vector3 newColor)
+    {
+        Color tempColor = new Color(newColor.x, newColor.y, newColor.z);
+        //GetComponent<Renderer>().material.color = tempColor;
+
+        List<Material> m = new List<Material>();
+        rend.GetMaterials(m);
+
+        for (int i = 0; i < m.Count; i++)
+        {
+            m[i].color = tempColor;
+            m[i].SetColor("_EmissionColor", tempColor);
+            m[i].EnableKeyword("_EMISSION");
+        }
+
+        m[2].color = Color.black;
     }
 }

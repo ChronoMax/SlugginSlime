@@ -49,7 +49,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         CheckForMasterClient();
         photonView = PhotonView.Get(this);
-        playerCountText.text = joinedplayers + "/4 players joined";
+        playerCountText.text = $"{joinedplayers}/{PhotonNetwork.CurrentRoom.MaxPlayers} playersjoined";
         playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
         photonView.RPC("UpdateText", RpcTarget.All);
         StartCoroutine(SelectedSlot());
@@ -59,7 +59,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if(GameManager.Instance.GetInput().text.Length > 0)
+        if(GameManager.Instance.GetInput().text.Length > 0 && !GameManager.Instance.GetInput().text.Contains(" "))
         {
             readyBtn.interactable = true;
         }
@@ -132,7 +132,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         CheckForMasterClient();
         joinedplayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        playerCountText.text = joinedplayers + "/4 players joined";
+        playerCountText.text = $"{joinedplayers}/{PhotonNetwork.CurrentRoom.MaxPlayers} playersjoined";
         playerReadyText.text = readyplayers + "/" + joinedplayers + "players are ready";
 
         if (PhotonNetwork.IsMasterClient && readyplayers >= 2 && readyplayers == joinedplayers)
@@ -146,14 +146,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             startBtn.interactable = false;
         }
 
-        if (joinedplayers < 4)
+        if (joinedplayers < PhotonNetwork.CurrentRoom.MaxPlayers)
         {
             PhotonNetwork.CurrentRoom.IsVisible = true;
             PhotonNetwork.CurrentRoom.IsOpen = true;
             //print("Room is open");
         }
 
-        if (joinedplayers == 4)
+        if (joinedplayers == PhotonNetwork.CurrentRoom.MaxPlayers)
         {
             PhotonNetwork.CurrentRoom.IsVisible = false;
             PhotonNetwork.CurrentRoom.IsOpen = false;

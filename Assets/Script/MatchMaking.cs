@@ -9,7 +9,6 @@ using Photon.Pun.UtilityScripts;
 public class MatchMaking : MonoBehaviourPunCallbacks
 {
     [Header("UI")]
-    [SerializeField] string onlineScene;
     [SerializeField] Text debugText;
     [SerializeField] InputField roomName;
 
@@ -19,11 +18,21 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     [SerializeField] Button joinButton;
     [SerializeField] Text textButton;
 
-        [Header("Canvasses")]
+    [Header("Dropdown")]
+    [SerializeField] Dropdown modeDropdown;
+
+    [Header("Canvasses")]
     [SerializeField] GameObject mainCV;
     [SerializeField] GameObject htpCV;
 
+
     private List<RoomInfo> roomList;
+    string onlineScene;
+    string sceneToLoad;
+    int maxPlayerCount;
+
+    ExitGames.Client.Photon.Hashtable table;
+    RoomOptions m_roomOptions;
 
     private bool foundRoom = false;
     void Start()
@@ -41,7 +50,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
         }
     }
 
-    public void Play()
+    public void Play()//Play btn
     {
         playButton.interactable = false;
         joinButton.interactable = false;
@@ -82,22 +91,24 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     }
     IEnumerator JoinRandomRoom()
     {
+        SwitchGamemode();
         yield return new WaitForSeconds(1);
 
-        PhotonNetwork.JoinRandomRoom();
+        PhotonNetwork.JoinRandomRoom(table, (byte)maxPlayerCount);
     }
 
     IEnumerator CreateRandomRoom()
     {
         yield return new WaitForSecondsRealtime(3);
-        string randomRoom = Random.Range(1, 100000).ToString();
 
-        RoomOptions roomOpsSpecial = new RoomOptions()
-        {
-            IsVisible = true, // Private game?
-            IsOpen = true, // Joinable?
-            MaxPlayers = (byte)4, // RoomSize in Bytes
-        };
+        SwitchGamemode();
+
+        //RoomOptions roomOpsSpecial = new RoomOptions()
+        //{
+        //    IsVisible = true, // Private game?
+        //    IsOpen = true, // Joinable?
+        //    MaxPlayers = (byte)maxPlayerCount, // RoomSize in Bytes
+        //};
 
         if (roomName.text.Length == 5 && foundRoom == true)
         {
@@ -107,18 +118,30 @@ public class MatchMaking : MonoBehaviourPunCallbacks
         else
         {
             debugText.text = "Searching for a random game..";
-            PhotonNetwork.CreateRoom(randomRoom, roomOpsSpecial);
+            PhotonNetwork.CreateRoom(GetRandom5digit(), m_roomOptions);
         }
+    }
+
+    string GetRandom5digit()
+    {
+        string num = "";
+        for (int i = 0; i < 5; i++)
+        {
+            num += Random.Range(1, 9).ToString();
+        }
+
+        return num;
     }
 
     private bool CheckRoom()
     {
         if (roomList != null)
         {
-            foreach (RoomInfo room in roomList)
+            for (int i = 0; i < roomList.Count; i++)
             {
-                if (room.Name == roomName.text)
+                if(roomList[i].Name == roomName.text)
                 {
+                    sceneToLoad = roomList[i].CustomProperties["scene"].ToString();
                     return true;
                 }
             }
@@ -130,6 +153,11 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         debugText.text = "Joining...";
+
+        if(sceneToLoad!= null)
+        {
+            onlineScene = sceneToLoad;
+        }
         PhotonNetwork.LoadLevel(onlineScene);
     }
 
@@ -180,5 +208,35 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     public void ExitGameBtn()
     {
         Application.Quit();
+    }
+
+    public void SwitchGamemode()
+    {
+        m_roomOptions = new RoomOptions();
+        m_roomOptions.IsOpen = true;
+        m_roomOptions.IsVisible = true;
+
+        maxPlayerCount = 4;
+        onlineScene = "LobbyMax_4";
+
+        table = new ExitGames.Client.Photon.Hashtable();
+        table.Add("mode" , maxPlayerCount);
+        table.Add("scene", onlineScene);
+        m_roomOptions.CustomRoomProperties = table;
+        m_roomOptions.CustomRoomPropertiesForLobby = new string[] { "mode", "scene" };
+        m_roomOptions.MaxPlayers = (byte)4;
+
+        if(modeDropdown.value == 1)
+        {
+            maxPlayerCount = 20;
+            onlineScene = "LobbyMax_20";
+
+            table = new ExitGames.Client.Photon.Hashtable();
+            table.Add("mode" , maxPlayerCount);
+            table.Add("scene", onlineScene);
+            m_roomOptions.CustomRoomProperties = table;
+            m_roomOptions.CustomRoomPropertiesForLobby = new string[] { "mode", "scene" };
+            m_roomOptions.MaxPlayers = (byte)20;
+        }
     }
 }

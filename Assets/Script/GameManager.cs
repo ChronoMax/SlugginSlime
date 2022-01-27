@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
             }
         }
 
-        if (SceneManager.GetActiveScene().name != "LobbyMax")
+        if (SceneManager.GetActiveScene().name != "LobbyMax_4" && SceneManager.GetActiveScene().name != "LobbyMax_20")
         {
             toolTip.SetActive(false);
             RoomText.text = "";
@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
     public void CursorMode()
     {
         toggle = !toggle;
-        if(SceneManager.GetActiveScene().name != "LobbyMax")
+        if(SceneManager.GetActiveScene().name != "LobbyMax_4" || SceneManager.GetActiveScene().name != "LobbyMax_20")
         {
             if (toggle)
             {
@@ -176,5 +176,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
     public InputField GetInput()
     {
         return nameInputField;
+    }
+
+    public bool GetSettingsPanel()
+    {
+        if(exitPanel.activeSelf || settingsPanel.activeSelf)
+        {
+            return true;
+        }
+        return false;
     }
 }

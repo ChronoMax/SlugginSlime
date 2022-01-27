@@ -5,17 +5,16 @@ using Photon.Pun;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    Transform[] spawnPoints = new Transform[6];
+    [SerializeField]
+    Transform[] spawnPoints;
 
     // Start is called before the first frame update
     void Start()
     {
-        spawnPoints[0] = transform.GetChild(0);
-        spawnPoints[1] = transform.GetChild(1);
-        spawnPoints[2] = transform.GetChild(2);
-        spawnPoints[3] = transform.GetChild(3);
-        spawnPoints[4] = transform.GetChild(4);
-        spawnPoints[5] = transform.GetChild(5);
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            spawnPoints[i] = transform.GetChild(i);
+        }
 
         SpawnPlayer(Random.Range(0, spawnPoints.Length));
         

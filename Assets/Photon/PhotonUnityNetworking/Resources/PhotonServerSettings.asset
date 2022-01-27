@@ -64,6 +64,7 @@ MonoBehaviour:
   - TriggerTrap
   - PlayStartSound
   - increaseIndex
+  - ChangeColor
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
