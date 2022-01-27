@@ -46,7 +46,6 @@ public class SlimeController : MonoBehaviour
     private Image TimeBetweenAttackVisual;
     private Text healthText;
 
-    public Material ogMat;
     public Renderer rend;
     private Animator anim;
     private void Start()
