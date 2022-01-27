@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPointerEnterHandler, IPoi
     public void CursorMode()
     {
         toggle = !toggle;
-        if(SceneManager.GetActiveScene().name != "LobbyMax_4" || SceneManager.GetActiveScene().name != "LobbyMax_20")
+        if(SceneManager.GetActiveScene().name != "LobbyMax_4" && SceneManager.GetActiveScene().name != "LobbyMax_20")
         {
             if (toggle)
             {
